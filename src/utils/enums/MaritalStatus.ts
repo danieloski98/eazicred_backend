@@ -1,0 +1,7 @@
+export enum MARITAL_STATUS {
+  SINGLE = 1,
+  MARRIED,
+  DIVORCED,
+  SEPERATED,
+  WIDOWED,
+}
