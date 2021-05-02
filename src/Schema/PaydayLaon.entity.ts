@@ -2,7 +2,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import { EMPLOYMENT_STATUS } from 'src/utils/enums/Employmentstatus';
 import { LOANTYPE } from 'src/utils/enums/LoanType';
 import { MARITAL_STATUS } from 'src/utils/enums/MaritalStatus';
-import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { User } from './User.entity';
 
 @Entity()
 export class PayDayLoan {
@@ -17,7 +24,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   user_id: string;
@@ -26,7 +33,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   BVN: string;
@@ -35,7 +42,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: Date,
+    type: 'datetime',
     nullable: false,
   })
   DOB: Date;
@@ -44,7 +51,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   Means_of_ID: string;
@@ -53,7 +60,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   ID_number: string;
@@ -69,25 +76,16 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: Date,
+    type: 'datetime',
     nullable: false,
   })
   expiry_date: Date;
 
   @ApiProperty({
-    required: true,
-  })
-  @Column({
-    type: String,
-    nullable: false,
-  })
-  mobile_number: string;
-
-  @ApiProperty({
     required: false,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   alt_number: string;
@@ -96,7 +94,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   home_address: string;
@@ -105,7 +103,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   landmark: string;
@@ -114,7 +112,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   LGA_of_residence: string;
@@ -123,7 +121,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   state: string;
@@ -132,13 +130,15 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: Number,
+    type: 'int',
     nullable: false,
   })
   length_of_time_at_current_address: number;
 
   @ApiProperty({
     required: true,
+    enum: MARITAL_STATUS,
+    enumName: 'MARITAL_STATUS',
   })
   @Column({
     type: 'enum',
@@ -163,7 +163,7 @@ export class PayDayLoan {
     required: false,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   current_employer: string;
@@ -172,7 +172,7 @@ export class PayDayLoan {
     required: false,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   current_employer_address: string;
@@ -181,7 +181,7 @@ export class PayDayLoan {
     required: false,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   current_employer_landmark: string;
@@ -190,7 +190,7 @@ export class PayDayLoan {
     required: false,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   current_employer_LGA: string;
@@ -199,7 +199,7 @@ export class PayDayLoan {
     required: false,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   current_employer_state: string;
@@ -208,7 +208,7 @@ export class PayDayLoan {
     required: false,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   current_employer_office_number: string;
@@ -217,7 +217,7 @@ export class PayDayLoan {
     required: false,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   staff_id: string;
@@ -226,7 +226,7 @@ export class PayDayLoan {
     required: false,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   department: string;
@@ -235,7 +235,7 @@ export class PayDayLoan {
     required: false,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   job_title: string;
@@ -244,7 +244,7 @@ export class PayDayLoan {
     required: false,
   })
   @Column({
-    type: Date,
+    type: 'datetime',
     nullable: true,
   })
   date_employed: Date;
@@ -253,7 +253,7 @@ export class PayDayLoan {
     required: false,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   previous_employer: string;
@@ -262,7 +262,7 @@ export class PayDayLoan {
     required: false,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   previous_employer_address: string;
@@ -271,7 +271,7 @@ export class PayDayLoan {
     required: false,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   length_of_time_with_previous_employer: string;
@@ -280,7 +280,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: Number,
+    type: 'int',
     nullable: false,
   })
   jobs_in_last_5_yeara: number;
@@ -289,7 +289,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: Date,
+    type: 'datetime',
     nullable: false,
   })
   current_paydate: Date;
@@ -298,7 +298,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: Boolean,
+    type: 'boolean',
     nullable: false,
   })
   existing_loan: boolean;
@@ -319,7 +319,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   next_of_kin_surname: string;
@@ -328,7 +328,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   next_of_kin_firstname: string;
@@ -337,7 +337,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   next_of_kin_relationship: string;
@@ -346,7 +346,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   next_of_kin_phone: string;
@@ -355,7 +355,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   next_of_kin_address: string;
@@ -364,7 +364,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: Number,
+    type: 'int',
     nullable: false,
   })
   loan_amount: number;
@@ -373,10 +373,10 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: Number,
+    type: 'text',
     nullable: false,
   })
-  loan_tenure: number;
+  loan_tenure: string;
 
   @ApiProperty({
     required: true,
@@ -391,7 +391,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'varchar',
     nullable: false,
   })
   account_name: string;
@@ -400,7 +400,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'varchar',
     nullable: false,
   })
   bank_name: string;
@@ -409,16 +409,16 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: Number,
+    type: 'text',
     nullable: true,
   })
-  hear_about_us: number;
+  hear_about_us: string;
 
   @ApiProperty({
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   passport: string;
@@ -427,7 +427,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   government_ID: string;
@@ -436,7 +436,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   bank_statement: string;
@@ -445,7 +445,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   company_id: string;
@@ -454,7 +454,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: true,
   })
   letter_of_employment: string;
@@ -463,7 +463,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   HR_letter_of_comfirmation: string;
@@ -472,7 +472,7 @@ export class PayDayLoan {
     required: true,
   })
   @Column({
-    type: String,
+    type: 'text',
     nullable: false,
   })
   utility_bill: string;
@@ -485,4 +485,10 @@ export class PayDayLoan {
     default: new Date().toISOString(),
   })
   created_at: string;
+
+  @ManyToOne(() => User, (user) => user.paydayloans, {
+    cascade: ['insert', 'update', 'remove'],
+  })
+  @JoinColumn({ referencedColumnName: 'id', name: 'user_id' })
+  user: User;
 }

@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { PayDayLoan } from './PaydayLaon.entity';
+import { SMELOAN } from './SME.entity';
 
 @Entity()
 export class User {
@@ -60,4 +62,16 @@ export class User {
     nullable: false,
   })
   created_at: string;
+
+  @OneToMany(() => PayDayLoan, (loan) => loan.user, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  paydayloans: PayDayLoan[];
+
+  @OneToMany(() => SMELOAN, (loan) => loan.user, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  SMEloans: SMELOAN[];
 }

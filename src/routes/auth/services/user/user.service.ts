@@ -83,10 +83,10 @@ export class UserService {
   public async loginUser(payload: Partial<User>): Promise<IReturnObject> {
     try {
       // check if an account with the email exisits
-      const accountExisit = await this.userRepo.find({
+      const accountExisit = await this.userRepo.findOne({
         where: { email: payload.email },
       });
-      if (accountExisit.length < 1) {
+      if (accountExisit === undefined) {
         return Return({
           error: true,
           statusCode: 400,
@@ -95,7 +95,7 @@ export class UserService {
       }
 
       // verify the password
-      const existingPassword = accountExisit[0].password;
+      const existingPassword = accountExisit.password;
       const passwordMatch = compareSync(payload.password, existingPassword);
 
       if (!passwordMatch) {
@@ -106,8 +106,11 @@ export class UserService {
         });
       } else {
         // generate jwt
+        delete accountExisit.password;
+        delete accountExisit.created_at;
+        payload['id'] = accountExisit.id;
+        this.logger.warn(typeof accountExisit);
         const jwt = await this.generateJWT(payload);
-        delete accountExisit[0].password;
 
         return Return({
           error: false,
@@ -115,7 +118,7 @@ export class UserService {
           successMessage: 'Login successful',
           data: {
             token: jwt,
-            user: accountExisit[0],
+            user: accountExisit,
           },
         });
       }
@@ -202,6 +205,7 @@ export class UserService {
   }
 
   public async generateJWT(payload: Partial<User>): Promise<string> {
+    this.logger.warn(payload);
     const JWT = sign(payload, 'EAZICRED', {
       algorithm: 'HS256',
       expiresIn: '2h',

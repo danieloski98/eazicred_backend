@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { User } from './User.entity';
 
 @Entity()
 export class SMELOAN {
@@ -16,31 +23,7 @@ export class SMELOAN {
   @Column({
     nullable: false,
   })
-  gender: string;
-
-  @ApiProperty({
-    required: true,
-  })
-  @Column({
-    nullable: false,
-  })
-  firstname: string;
-
-  @ApiProperty({
-    required: true,
-  })
-  @Column({
-    nullable: false,
-  })
-  middlename: string;
-
-  @ApiProperty({
-    required: true,
-  })
-  @Column({
-    nullable: false,
-  })
-  lastname: string;
+  user_id: string;
 
   @ApiProperty({
     required: true,
@@ -76,22 +59,6 @@ export class SMELOAN {
 
   @ApiProperty({
     required: true,
-  })
-  @Column({
-    nullable: false,
-  })
-  phone_number: string;
-
-  @ApiProperty({
-    required: true,
-  })
-  @Column({
-    nullable: false,
-  })
-  email: string;
-
-  @ApiProperty({
-    required: true,
     description: 'The number of years the business has be in existence',
   })
   @Column({
@@ -115,4 +82,10 @@ export class SMELOAN {
     default: new Date().toISOString(),
   })
   created_at: string;
+
+  @ManyToOne(() => User, (user) => user.SMEloans, {
+    cascade: ['insert', 'update', 'remove'],
+  })
+  @JoinColumn({ referencedColumnName: 'id', name: 'user_id' })
+  user: User;
 }
