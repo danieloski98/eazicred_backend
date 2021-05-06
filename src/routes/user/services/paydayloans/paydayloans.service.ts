@@ -186,6 +186,55 @@ export class PaydayloansService {
     }
   }
 
+  async getdraftsLoan(id: string): Promise<IReturnObject> {
+    try {
+      const data = await this.paydayloanRepo.find({
+        where: { user_id: id, draft: true },
+      });
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'paydayloan drafts',
+        data: data,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async getdraftLoan(id: string): Promise<IReturnObject> {
+    try {
+      const data = await this.paydayloanRepo.findOne({
+        where: { id, draft: true },
+      });
+      if (data === undefined) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Not found',
+        });
+      }
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'paydayloan drafts',
+        data: data,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
+
   // files upload
   async handleFiles(id: string, files: Files): Promise<void> {
     const loan = await this.paydayloanRepo.findOne({ where: { id } });

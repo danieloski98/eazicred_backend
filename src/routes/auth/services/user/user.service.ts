@@ -6,6 +6,7 @@ import { IReturnObject } from 'src/utils/ReturnObject';
 import { Repository } from 'typeorm';
 import { sign } from 'jsonwebtoken';
 import { compare, compareSync, genSaltSync, hash } from 'bcrypt';
+import { Admin } from 'src/Schema/Admin.entity';
 
 @Injectable()
 export class UserService {
@@ -204,7 +205,9 @@ export class UserService {
     }
   }
 
-  public async generateJWT(payload: Partial<User>): Promise<string> {
+  public async generateJWT(
+    payload: Partial<User> | Partial<Admin>,
+  ): Promise<string> {
     this.logger.warn(payload);
     const JWT = sign(payload, 'EAZICRED', {
       algorithm: 'HS256',

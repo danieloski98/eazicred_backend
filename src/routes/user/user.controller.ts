@@ -77,7 +77,7 @@ export class UserController {
     res.status(result.statusCode).send(result);
   }
 
-  @Get('paydayloans/:laon_id')
+  @Get('paydayloan/:loan_id')
   @ApiTags('USER')
   @ApiParam({
     name: 'loan_id',
@@ -94,6 +94,43 @@ export class UserController {
     const result = await this.PaydayLoanService.getsinglepaydayloans(
       param['loan_id'],
     );
+    res.status(result.statusCode).send(result);
+  }
+
+  @Get('paydayloans/drafts')
+  @ApiTags('USER')
+  @ApiParam({
+    name: 'loan_id',
+    type: String,
+    description: 'the id of the paydayloan',
+  })
+  @ApiOkResponse({ description: 'loans found' })
+  @ApiBadRequestResponse({ description: 'loans not found' })
+  @ApiUnauthorizedResponse({
+    description: 'either no token or the token expired',
+  })
+  @ApiInternalServerErrorResponse({ description: 'Error from the server' })
+  async getPaydayloandrafts(@Req() req: Request, @Res() res: Response) {
+    const user = req['user'];
+    const result = await this.PaydayLoanService.getdraftsLoan(user);
+    res.status(result.statusCode).send(result);
+  }
+
+  @Get('paydayloans/draft/:loan_id')
+  @ApiTags('USER')
+  @ApiParam({
+    name: 'loan_id',
+    type: String,
+    description: 'the id of the paydayloan',
+  })
+  @ApiOkResponse({ description: 'loans found' })
+  @ApiBadRequestResponse({ description: 'loans not found' })
+  @ApiUnauthorizedResponse({
+    description: 'either no token or the token expired',
+  })
+  @ApiInternalServerErrorResponse({ description: 'Error from the server' })
+  async getPaydayloandraft(@Res() res: Response, @Param() param: any) {
+    const result = await this.PaydayLoanService.getdraftLoan(param['loan_id']);
     res.status(result.statusCode).send(result);
   }
 
