@@ -47,4 +47,69 @@ export class SmeloansService {
       });
     }
   }
+
+  async updateSMELoan(
+    id: string,
+    payload: Partial<SMELOAN>,
+  ): Promise<IReturnObject> {
+    try {
+      const item = await this.smeloanRepo.findOne({ where: { id } });
+      if (item === undefined) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'SME loan not found',
+        });
+      }
+      const updatedItem = await this.smeloanRepo
+        .createQueryBuilder()
+        .update()
+        .set({ ...payload })
+        .where({ id: id })
+        .execute();
+
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Update SME loan',
+        data: updatedItem,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async deleteLoan(id: string): Promise<IReturnObject> {
+    try {
+      const item = await this.smeloanRepo.findOne({ where: { id } });
+      if (item === undefined) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'SME loan not found',
+        });
+      }
+
+      const updatedItem = await this.smeloanRepo.delete({ id });
+
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Update SME loan',
+        data: updatedItem,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
 }
