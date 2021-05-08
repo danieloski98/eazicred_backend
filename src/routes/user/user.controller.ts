@@ -16,6 +16,7 @@ import {
   ApiBadRequestResponse,
   ApiBody,
   ApiConsumes,
+  ApiHeaders,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiParam,
@@ -44,6 +45,13 @@ export class UserController {
 
   @Get(':id')
   @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiParam({ name: 'id', type: String, description: 'the id of the user' })
   @ApiOkResponse({ description: 'User found' })
   @ApiBadRequestResponse({ description: 'User not found' })
@@ -59,6 +67,13 @@ export class UserController {
 
   @Get('paydayloans/:user_id')
   @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiParam({
     name: 'user_id',
     type: String,
@@ -79,6 +94,13 @@ export class UserController {
 
   @Get('paydayloan/:loan_id')
   @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiParam({
     name: 'loan_id',
     type: String,
@@ -99,11 +121,13 @@ export class UserController {
 
   @Get('paydayloans/drafts')
   @ApiTags('USER')
-  @ApiParam({
-    name: 'loan_id',
-    type: String,
-    description: 'the id of the paydayloan',
-  })
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiOkResponse({ description: 'loans found' })
   @ApiBadRequestResponse({ description: 'loans not found' })
   @ApiUnauthorizedResponse({
@@ -118,6 +142,13 @@ export class UserController {
 
   @Get('paydayloans/draft/:loan_id')
   @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiParam({
     name: 'loan_id',
     type: String,
@@ -138,6 +169,13 @@ export class UserController {
 
   @Post('createSMEloan')
   @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiBody({ type: SMELOAN, description: 'the details for the SME load' })
   @ApiOkResponse({ description: 'loan created' })
   @ApiBadRequestResponse({
@@ -159,6 +197,13 @@ export class UserController {
 
   @Post('createpaydayloan')
   @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiBody({
     type: PayDayLoan,
     description: 'the details for the paydayloan load',
@@ -202,8 +247,15 @@ export class UserController {
 
   // PUT ROUTES
 
-  @Put('updatepaydayloan:/loan_id')
+  @Put('updatepaydayloan/:loan_id')
   @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiParam({ name: 'loan_id', type: String })
   @ApiBody({
     type: PayDayLoan,
@@ -245,8 +297,15 @@ export class UserController {
     res.status(result.statusCode).send(result);
   }
 
-  @Put('updateSMEloan:/loan_id')
+  @Put('updateSMEloan/:loan_id')
   @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiParam({ name: 'loan_id', type: String })
   @ApiBody({
     type: SMELOAN,
@@ -274,8 +333,15 @@ export class UserController {
 
   // DELETE ROUTE
 
-  @Delete('deletepaydayloan:/loan_id')
+  @Delete('deletepaydayloan/:loan_id')
   @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiParam({ name: 'loan_id', type: String })
   @ApiOkResponse({ description: 'paydayloan deleted' })
   @ApiBadRequestResponse({
@@ -290,8 +356,15 @@ export class UserController {
     res.status(result.statusCode).send(result);
   }
 
-  @Delete('deleteSMEloan:/loan_id')
+  @Delete('deleteSMEloan/:loan_id')
   @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiParam({ name: 'loan_id', type: String })
   @ApiOkResponse({ description: 'paydayloan deleted' })
   @ApiBadRequestResponse({

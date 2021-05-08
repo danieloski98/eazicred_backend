@@ -2,9 +2,11 @@ import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBody,
+  ApiHeaders,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiParam,
+  ApiProperty,
   ApiTags,
 } from '@nestjs/swagger';
 import { Response } from 'express';
@@ -12,7 +14,14 @@ import { User } from 'src/Schema/User.entity';
 import { UserService } from './services/user/user.service';
 
 class ChangePassword {
+  @ApiProperty({
+    type: String,
+  })
   newpassword: string;
+
+  @ApiProperty({
+    type: String,
+  })
   oldpassword: string;
 }
 

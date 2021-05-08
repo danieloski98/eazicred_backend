@@ -13,6 +13,7 @@ import {
 import {
   ApiBadRequestResponse,
   ApiBody,
+  ApiHeaders,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiParam,
@@ -35,6 +36,13 @@ export class AdminController {
   // GET ROUTES
   @Get('agents')
   @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiOkResponse({ description: 'Admin Created Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
@@ -45,6 +53,13 @@ export class AdminController {
 
   @Get('agents')
   @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiOkResponse({ description: 'Admin Created Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
@@ -56,6 +71,13 @@ export class AdminController {
 
   @Get('SMEloans')
   @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiOkResponse({ description: 'Admin Created Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
@@ -66,6 +88,13 @@ export class AdminController {
 
   @Get('paydayloans')
   @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiOkResponse({ description: 'Admin Created Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
@@ -76,6 +105,13 @@ export class AdminController {
 
   @Get('SMEloan/:loan_id')
   @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiParam({ name: 'loan_id', type: String })
   @ApiOkResponse({ description: 'Admin Created Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
@@ -87,6 +123,13 @@ export class AdminController {
 
   @Get('payday/:loan_id')
   @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiParam({ name: 'loan_id', type: String })
   @ApiOkResponse({ description: 'Admin Created Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
@@ -99,6 +142,13 @@ export class AdminController {
   // POST ROutes
   @Post()
   @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiOkResponse({ description: 'Admin Created Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
@@ -110,6 +160,13 @@ export class AdminController {
 
   @Post('login')
   @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiOkResponse({ description: 'Admin login Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
@@ -121,6 +178,13 @@ export class AdminController {
 
   @Post('createagent')
   @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiOkResponse({ description: 'Admin login Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
@@ -133,6 +197,13 @@ export class AdminController {
   // PUT ROUTES
   @Put('agent/:agent_id')
   @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiParam({ name: 'agent_id', type: String })
   @ApiBody({ type: Agent })
   @ApiOkResponse({ description: 'Admin login Successfully' })
@@ -150,15 +221,18 @@ export class AdminController {
   // DELETE ROutes
   @Delete('agent/:agent_id')
   @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
   @ApiParam({ name: 'agent_id', type: String })
   @ApiOkResponse({ description: 'Admin login Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
-  async deleteagent(
-    @Res() res: Response,
-    @Body() body: Agent,
-    @Param() param: any,
-  ) {
+  async deleteagent(@Res() res: Response, @Param() param: any) {
     const result = await this.agentService.deleteAgent(param['agent_id']);
     res.status(result.statusCode).send(result);
   }
