@@ -33,4 +33,43 @@ export class UserService {
       });
     }
   }
+
+  async updateUserDetails(
+    id: string,
+    payload: Partial<User>,
+  ): Promise<IReturnObject> {
+    try {
+      if (payload.email || payload.password) {
+        delete payload.email;
+        delete payload.password;
+      }
+      const updateUser = await this.userRepo
+        .createQueryBuilder()
+        .update()
+        .set(payload)
+        .where({ id })
+        .execute();
+      const user = await this.userRepo
+        .createQueryBuilder()
+        .where({ id })
+        .getOne();
+
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage:
+          updateUser.affected < 1
+            ? 'User details not updated'
+            : 'Details updated',
+        data: user,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
 }

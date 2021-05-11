@@ -26,6 +26,7 @@ import {
 import { Request, Response } from 'express';
 import { PayDayLoan } from 'src/Schema/PaydayLaon.entity';
 import { SMELOAN } from 'src/Schema/SME.entity';
+import { User } from 'src/Schema/User.entity';
 import {
   Files,
   PaydayloansService,
@@ -47,7 +48,7 @@ export class UserController {
   @ApiTags('USER')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -69,7 +70,7 @@ export class UserController {
   @ApiTags('USER')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -96,7 +97,7 @@ export class UserController {
   @ApiTags('USER')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -123,7 +124,7 @@ export class UserController {
   @ApiTags('USER')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -144,7 +145,7 @@ export class UserController {
   @ApiTags('USER')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -171,7 +172,7 @@ export class UserController {
   @ApiTags('USER')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -199,7 +200,7 @@ export class UserController {
   @ApiTags('USER')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -251,7 +252,7 @@ export class UserController {
   @ApiTags('USER')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -301,7 +302,7 @@ export class UserController {
   @ApiTags('USER')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -331,13 +332,47 @@ export class UserController {
     res.status(result.statusCode).send(result);
   }
 
+
+  @Put('')
+  @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiParam({ name: 'loan_id', type: String })
+  @ApiBody({
+    type: SMELOAN,
+    description: 'the details for the SMEloan',
+  })
+  @ApiOkResponse({ description: 'SME loan updated' })
+  @ApiBadRequestResponse({
+    description: 'Something happended while trying to update the loan',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'either no token or the token expired',
+  })
+  @ApiInternalServerErrorResponse({ description: 'Error from the server' })
+  async updateUser(
+    @Res() res: Response,
+    @Req() req: Request,
+    @Param() param: any,
+    @Body() body: Partial<User>,
+  ) {
+    const user = req['user'];
+    const result = await this.userService.updateUserDetails(user, body);
+    res.status(result.statusCode).send(result);
+  }
+
   // DELETE ROUTE
 
   @Delete('deletepaydayloan/:loan_id')
   @ApiTags('USER')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -360,7 +395,7 @@ export class UserController {
   @ApiTags('USER')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },

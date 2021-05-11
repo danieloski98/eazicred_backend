@@ -38,7 +38,7 @@ export class AdminController {
   @ApiTags('ADMIN')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -55,7 +55,7 @@ export class AdminController {
   @ApiTags('ADMIN')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -73,7 +73,7 @@ export class AdminController {
   @ApiTags('ADMIN')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -90,7 +90,7 @@ export class AdminController {
   @ApiTags('ADMIN')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -107,7 +107,7 @@ export class AdminController {
   @ApiTags('ADMIN')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -125,7 +125,7 @@ export class AdminController {
   @ApiTags('ADMIN')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -144,7 +144,7 @@ export class AdminController {
   @ApiTags('ADMIN')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -162,7 +162,7 @@ export class AdminController {
   @ApiTags('ADMIN')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -180,7 +180,7 @@ export class AdminController {
   @ApiTags('ADMIN')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -199,7 +199,7 @@ export class AdminController {
   @ApiTags('ADMIN')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
@@ -223,7 +223,7 @@ export class AdminController {
   @ApiTags('ADMIN')
   @ApiHeaders([
     {
-      name: 'authorization',
+      name: 'Authorization',
       example: 'Bearer token',
       description: 'This is a bearer token',
     },
