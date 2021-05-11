@@ -332,7 +332,6 @@ export class UserController {
     res.status(result.statusCode).send(result);
   }
 
-
   @Put('')
   @ApiTags('USER')
   @ApiHeaders([
@@ -342,14 +341,13 @@ export class UserController {
       description: 'This is a bearer token',
     },
   ])
-  @ApiParam({ name: 'loan_id', type: String })
   @ApiBody({
-    type: SMELOAN,
-    description: 'the details for the SMEloan',
+    type: User,
+    description: 'the details of the user for the update',
   })
-  @ApiOkResponse({ description: 'SME loan updated' })
+  @ApiOkResponse({ description: 'user details updated' })
   @ApiBadRequestResponse({
-    description: 'Something happended while trying to update the loan',
+    description: 'Something happended while trying to update the user',
   })
   @ApiUnauthorizedResponse({
     description: 'either no token or the token expired',
