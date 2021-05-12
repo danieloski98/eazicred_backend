@@ -40,6 +40,7 @@ export class UserModule implements NestModule {
       },
       { path: 'user/deleteSMEloan/:loan_id', method: RequestMethod.DELETE },
       { path: 'user', method: RequestMethod.PUT },
+      { path: 'user/passwordupdate', method: RequestMethod.PUT },
     );
   }
 }

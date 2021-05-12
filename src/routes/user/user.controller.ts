@@ -32,7 +32,10 @@ import {
   PaydayloansService,
 } from './services/paydayloans/paydayloans.service';
 import { SmeloansService } from './services/smeloans/smeloans.service';
-import { PasswordUpdatePayload, UserService } from './services/user/user.service';
+import {
+  PasswordUpdatePayload,
+  UserService,
+} from './services/user/user.service';
 
 @Controller('user')
 export class UserController {
@@ -363,8 +366,6 @@ export class UserController {
     const result = await this.userService.updateUserDetails(user, body);
     res.status(result.statusCode).send(result);
   }
-
-
 
   @Put('passwordupdate')
   @ApiTags('USER')
