@@ -1,3 +1,4 @@
+import { UserService as AuthService } from 'src/routes/auth/services/user/user.service';
 import { SMELOAN } from './../../Schema/SME.entity';
 import {
   MiddlewareConsumer,
@@ -17,7 +18,7 @@ import { PayDayLoan } from 'src/Schema/PaydayLaon.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([User, SMELOAN, PayDayLoan])],
   controllers: [UserController],
-  providers: [UserService, PaydayloansService, SmeloansService],
+  providers: [UserService, PaydayloansService, SmeloansService, AuthService],
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
@@ -38,6 +39,7 @@ export class UserModule implements NestModule {
         method: RequestMethod.DELETE,
       },
       { path: 'user/deleteSMEloan/:loan_id', method: RequestMethod.DELETE },
+      { path: 'user', method: RequestMethod.PUT },
     );
   }
 }

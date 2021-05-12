@@ -32,7 +32,7 @@ import {
   PaydayloansService,
 } from './services/paydayloans/paydayloans.service';
 import { SmeloansService } from './services/smeloans/smeloans.service';
-import { UserService } from './services/user/user.service';
+import { PasswordUpdatePayload, UserService } from './services/user/user.service';
 
 @Controller('user')
 export class UserController {
@@ -361,6 +361,40 @@ export class UserController {
   ) {
     const user = req['user'];
     const result = await this.userService.updateUserDetails(user, body);
+    res.status(result.statusCode).send(result);
+  }
+
+
+
+  @Put('passwordupdate')
+  @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiBody({
+    type: PasswordUpdatePayload,
+    description: 'the details of the user for the update',
+  })
+  @ApiOkResponse({ description: 'user details updated' })
+  @ApiBadRequestResponse({
+    description: 'Something happended while trying to update the user',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'either no token or the token expired',
+  })
+  @ApiInternalServerErrorResponse({ description: 'Error from the server' })
+  async updateUserPassword(
+    @Res() res: Response,
+    @Req() req: Request,
+    @Param() param: any,
+    @Body() body: PasswordUpdatePayload,
+  ) {
+    const user = req['user'];
+    const result = await this.userService.updatePassword(user, body);
     res.status(result.statusCode).send(result);
   }
 
