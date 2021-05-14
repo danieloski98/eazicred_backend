@@ -1,4 +1,3 @@
-import { UserService as AuthService } from 'src/routes/auth/services/user/user.service';
 import { SMELOAN } from './../../Schema/SME.entity';
 import {
   MiddlewareConsumer,
@@ -14,11 +13,12 @@ import { UserService } from './services/user/user.service';
 import { PaydayloansService } from './services/paydayloans/paydayloans.service';
 import { SmeloansService } from './services/smeloans/smeloans.service';
 import { PayDayLoan } from 'src/Schema/PaydayLaon.entity';
+import { NewuserService } from './services/newuser/newuser.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, SMELOAN, PayDayLoan])],
   controllers: [UserController],
-  providers: [UserService, PaydayloansService, SmeloansService, AuthService],
+  providers: [UserService, PaydayloansService, SmeloansService, NewuserService],
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

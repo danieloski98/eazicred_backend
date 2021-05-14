@@ -27,14 +27,15 @@ import { Request, Response } from 'express';
 import { PayDayLoan } from 'src/Schema/PaydayLaon.entity';
 import { SMELOAN } from 'src/Schema/SME.entity';
 import { User } from 'src/Schema/User.entity';
+import { NewuserService } from './services/newuser/newuser.service';
 import {
   Files,
   PaydayloansService,
 } from './services/paydayloans/paydayloans.service';
 import { SmeloansService } from './services/smeloans/smeloans.service';
 import {
-  PasswordUpdatePayload,
   UserService,
+  PasswordUpdatePayload,
 } from './services/user/user.service';
 
 @Controller('user')
@@ -43,6 +44,7 @@ export class UserController {
     private userService: UserService,
     private SMEloanService: SmeloansService,
     private PaydayLoanService: PaydayloansService,
+    private newUserService: NewuserService,
   ) {}
 
   // GET ROUTES

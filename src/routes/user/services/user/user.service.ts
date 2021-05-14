@@ -1,4 +1,3 @@
-import { UserService as AuthService } from 'src/routes/auth/services/user/user.service';
 import { Injectable, Logger } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,7 +5,7 @@ import { User } from 'src/Schema/User.entity';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
 import { Repository } from 'typeorm';
-import { compareSync } from 'bcrypt';
+import { compareSync, genSaltSync, hash } from 'bcrypt';
 
 export class PasswordUpdatePayload {
   @ApiProperty()
@@ -19,12 +18,9 @@ export class PasswordUpdatePayload {
 @Injectable()
 export class UserService {
   private logger = new Logger('USER:USERSERVICE');
-  constructor(
-    @InjectRepository(User) private userRepo: Repository<User>,
-    private authService: AuthService,
-  ) {}
+  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
 
-  async getUserDetails(id: string): Promise<IReturnObject> {
+  public async getUserDetails(id: string): Promise<IReturnObject> {
     try {
       const userdetails = await this.userRepo.findOne({
         where: { id },
@@ -91,7 +87,7 @@ export class UserService {
     }
   }
 
-  async updatePassword(
+  public async updatePassword(
     id: string,
     payload: PasswordUpdatePayload,
   ): Promise<IReturnObject> {
@@ -128,7 +124,7 @@ export class UserService {
       }
 
       // hash the password
-      const newPassword = await this.authService.generateHashedPassword(
+      const newPassword = await this.generateHashedPassword(
         payload.newpassword,
       );
 
@@ -156,5 +152,11 @@ export class UserService {
         trace: error,
       });
     }
+  }
+
+  public async generateHashedPassword(password: string): Promise<string> {
+    const salt = genSaltSync(10);
+    const hashedPassword = await hash(password, salt);
+    return hashedPassword;
   }
 }
