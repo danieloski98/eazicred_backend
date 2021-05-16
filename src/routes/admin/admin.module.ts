@@ -27,7 +27,7 @@ import { LoansService } from './services/loans/loans.service';
 export class AdminModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(AdmincheckMiddleware).forRoutes(
-      { path: 'admin', method: RequestMethod.POST },
+      // { path: 'admin', method: RequestMethod.POST },
       { path: 'admin/createagent', method: RequestMethod.POST },
       {
         path: 'admin/:agent_id',
