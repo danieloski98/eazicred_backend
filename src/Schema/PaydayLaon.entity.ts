@@ -17,7 +17,7 @@ export class PayDayLoan {
     required: false,
     description: 'This is auto generated',
   })
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('increment')
   id: string;
 
   @ApiProperty({
