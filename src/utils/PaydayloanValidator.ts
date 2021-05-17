@@ -50,4 +50,5 @@ export const PaydayloanValidator = joi.object({
   letter_of_employment: joi.any(),
   HR_letter_of_confirmation: joi.any(),
   utility_bill: joi.any(),
+  type: joi.number().required(),
 });

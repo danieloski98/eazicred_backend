@@ -171,6 +171,106 @@ export class UserController {
     res.status(result.statusCode).send(result);
   }
 
+  // SME LOANS
+
+  @Get('smeloans/:user_id')
+  @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiParam({
+    name: 'user_id',
+    type: String,
+    description: 'the id of the user',
+  })
+  @ApiOkResponse({ description: 'loans found' })
+  @ApiBadRequestResponse({ description: 'loans not found' })
+  @ApiUnauthorizedResponse({
+    description: 'either no token or the token expired',
+  })
+  @ApiInternalServerErrorResponse({ description: 'Error from the server' })
+  async getSMEloans(@Res() res: Response, @Param() param: any) {
+    const result = await this.SMEloanService.getSmeLoans(param['user_id']);
+    res.status(result.statusCode).send(result);
+  }
+
+  @Get('smeloan/:loan_id')
+  @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiParam({
+    name: 'loan_id',
+    type: String,
+    description: 'the id of the paydayloan',
+  })
+  @ApiOkResponse({ description: 'loans found' })
+  @ApiBadRequestResponse({ description: 'loans not found' })
+  @ApiUnauthorizedResponse({
+    description: 'either no token or the token expired',
+  })
+  @ApiInternalServerErrorResponse({ description: 'Error from the server' })
+  async getSMEloan(@Res() res: Response, @Param() param: any) {
+    const result = await this.SMEloanService.getSingleSmeLoans(
+      param['loan_id'],
+    );
+    res.status(result.statusCode).send(result);
+  }
+
+  @Get('smeloans/drafts')
+  @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiOkResponse({ description: 'loans found' })
+  @ApiBadRequestResponse({ description: 'loans not found' })
+  @ApiUnauthorizedResponse({
+    description: 'either no token or the token expired',
+  })
+  @ApiInternalServerErrorResponse({ description: 'Error from the server' })
+  async getsmeloandrafts(@Req() req: Request, @Res() res: Response) {
+    const user = req['user'];
+    const result = await this.SMEloanService.getdraftsSmeLoan(user);
+    res.status(result.statusCode).send(result);
+  }
+
+  @Get('smeloans/draft/:loan_id')
+  @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiParam({
+    name: 'loan_id',
+    type: String,
+    description: 'the id of the paydayloan',
+  })
+  @ApiOkResponse({ description: 'loans found' })
+  @ApiBadRequestResponse({ description: 'loans not found' })
+  @ApiUnauthorizedResponse({
+    description: 'either no token or the token expired',
+  })
+  @ApiInternalServerErrorResponse({ description: 'Error from the server' })
+  async getsmeloandraft(@Res() res: Response, @Param() param: any) {
+    const result = await this.SMEloanService.getsingleDraft(param['loan_id']);
+    res.status(result.statusCode).send(result);
+  }
+
   // POST ROUTES
 
   @Post('createSMEloan')

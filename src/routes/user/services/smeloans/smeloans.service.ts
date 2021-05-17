@@ -112,4 +112,106 @@ export class SmeloansService {
       });
     }
   }
+
+  async getSmeLoans(user_id: string): Promise<IReturnObject> {
+    try {
+      const loans = await this.smeloanRepo.find({
+        where: { user_id, draft: false },
+      });
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'SME loans',
+        data: loans,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async getSingleSmeLoans(id: string): Promise<IReturnObject> {
+    try {
+      const loan = await this.smeloanRepo.findOne({
+        where: { id, draft: false },
+      });
+      if (loan === undefined || loan === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          successMessage: 'SME loan not found',
+        });
+      }
+
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'SME loans',
+        data: loan,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async getdraftsSmeLoan(user_id: number): Promise<IReturnObject> {
+    try {
+      const dratfs = await this.smeloanRepo.find({
+        where: { user_id, draft: true },
+      });
+
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'drafts',
+        data: dratfs,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async getsingleDraft(loan_id: number): Promise<IReturnObject> {
+    try {
+      const draft = await this.smeloanRepo.findOne({
+        where: { id: loan_id, draft: true },
+      });
+
+      if (draft === undefined) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          successMessage: 'SME draft not found',
+        });
+      }
+
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'SME dratf found',
+        data: draft,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
 }

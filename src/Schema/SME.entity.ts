@@ -76,6 +76,25 @@ export class SMELOAN {
 
   @ApiProperty({
     required: true,
+    description: '1 = payday loan, 2 = sme loan',
+  })
+  @Column({
+    nullable: false,
+  })
+  type: string;
+
+  @ApiProperty({
+    required: true,
+    description: 'if the sme loan should be saved as draft',
+  })
+  @Column({
+    nullable: false,
+    default: true,
+  })
+  draft: boolean;
+
+  @ApiProperty({
+    required: true,
   })
   @Column({
     nullable: false,
