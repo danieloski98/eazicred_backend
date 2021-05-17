@@ -272,7 +272,7 @@ export class PayDayLoan {
     type: Number,
   })
   @Column({
-    nullable: false,
+    nullable: true,
   })
   length_of_time_with_previous_employer: number;
 
@@ -296,9 +296,9 @@ export class PayDayLoan {
 
   @ApiProperty({
     required: true,
+    description: 'if the user has existing loan',
   })
   @Column({
-    type: 'boolean',
     nullable: false,
   })
   existing_loan: boolean;
@@ -421,7 +421,7 @@ export class PayDayLoan {
   })
   @Column({
     type: 'text',
-    nullable: false,
+    nullable: true,
   })
   passport: string;
 
@@ -430,7 +430,7 @@ export class PayDayLoan {
     description: 'this is a file',
   })
   @Column({
-    nullable: false,
+    nullable: true,
   })
   government_ID: string;
 
@@ -466,7 +466,7 @@ export class PayDayLoan {
     description: 'this is a file',
   })
   @Column({
-    nullable: false,
+    nullable: true,
   })
   HR_letter_of_comfirmation: string;
 
@@ -475,7 +475,7 @@ export class PayDayLoan {
     description: 'this is a file',
   })
   @Column({
-    nullable: false,
+    nullable: true,
   })
   utility_bill: string;
 
@@ -510,8 +510,7 @@ export class PayDayLoan {
 
   @ApiProperty({
     required: true,
-    description:
-      'set to true if you want this to be a draft, else set to false',
+    description: 'if it should be saved as draft',
   })
   @Column({
     nullable: false,

@@ -3,10 +3,10 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { join } from 'path'
+import { join } from 'path';
 
 async function bootstrap() {
-  const port = 3000;
+  const port = 4300;
   const logger = new Logger();
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -18,7 +18,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('EAZICRED')
-    .setDescription('The EaziCred API description')
+    .setDescription('The EaziCred API documentation')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);

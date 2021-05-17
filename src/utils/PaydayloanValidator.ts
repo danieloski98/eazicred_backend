@@ -41,9 +41,10 @@ export const PaydayloanValidator = joi.object({
   loan_amount: joi.number().required(),
   loan_tenure: joi.string().required(),
   account_number: joi.string().required(),
+  account_name: joi.string().required(),
   bank_name: joi.string().required(),
   hear_about_us: joi.string(),
-  draft: joi.bool().required(),
+  draft: joi.boolean().required(),
   passport: joi.any(),
   government_ID: joi.any(),
   company_id: joi.any(),
@@ -51,4 +52,5 @@ export const PaydayloanValidator = joi.object({
   HR_letter_of_confirmation: joi.any(),
   utility_bill: joi.any(),
   type: joi.number().required(),
+  length_of_time_at_current_address: joi.number().required(),
 });

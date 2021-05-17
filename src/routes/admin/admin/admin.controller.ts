@@ -17,6 +17,7 @@ import {
   ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiParam,
+  ApiProperty,
   ApiTags,
 } from '@nestjs/swagger';
 import { Request, Response } from 'express';
@@ -24,6 +25,18 @@ import { Admin } from 'src/Schema/Admin.entity';
 import { Agent } from 'src/Schema/Agent.entity';
 import { AgentService } from '../services/agent/agent.service';
 import { CrudService } from '../services/crud/crud.service';
+
+class LoginDetails {
+  @ApiProperty({
+    required: true,
+  })
+  email: string;
+
+  @ApiProperty({
+    required: true,
+  })
+  password: string;
+}
 
 @Controller('admin')
 export class AdminController {
@@ -170,7 +183,7 @@ export class AdminController {
   @ApiOkResponse({ description: 'Admin login Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
-  @ApiBody({ type: Admin })
+  @ApiBody({ type: LoginDetails })
   async loginAdmin(@Res() res: Response, @Body() body: Admin) {
     const result = await this.adminService.login(body);
     res.status(result.statusCode).send(result);

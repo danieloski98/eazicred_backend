@@ -45,6 +45,10 @@ export class UserModule implements NestModule {
       { path: 'user/updatepaydayloan/:loan_id', method: RequestMethod.PUT },
       { path: 'user/updateSMEloan/:loan_id', method: RequestMethod.PUT },
       {
+        path: 'user/uploadpaydayloanfiles/:loan_id',
+        method: RequestMethod.POST,
+      },
+      {
         path: 'user/deletepaydayloan/:loan_id',
         method: RequestMethod.DELETE,
       },

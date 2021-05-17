@@ -31,15 +31,10 @@ export class PaydayloansService {
     private notiService: UserNotiService,
   ) {}
 
-  async createPaydayloan(
-    id: string,
-    loan: PayDayLoan,
-    files: Files,
-  ): Promise<IReturnObject> {
+  async createPaydayloan(id: string, loan: PayDayLoan): Promise<IReturnObject> {
     try {
       loan['user_id'] = id;
       console.log(loan['user_id']);
-      this.logger.log(files);
       const validation = PaydayloanValidator.validate(loan);
       if (validation.error) {
         return Return({
@@ -53,7 +48,7 @@ export class PaydayloansService {
       // CREATE THE LOAN
       const newloan = await this.paydayloanRepo.save(loan);
       // upload files
-      await this.handleFiles(newloan.id, files);
+      // await this.handleFiles(newloan.id, files);
 
       const user = await this.userRepo.findOne({
         where: { id: newloan.user_id },
@@ -81,6 +76,35 @@ export class PaydayloansService {
           ? 'Loan saved as draft'
           : 'Payday loan request successful',
         data: newloan,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async uploadFiles(id: number, files: Files): Promise<IReturnObject> {
+    try {
+      const loan = await this.paydayloanRepo.findOne({ where: { id } });
+      if (loan === undefined) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Loan entry not found',
+        });
+      }
+
+      await this.handleFiles(id as any, files);
+      const updatedloan = await this.paydayloanRepo.findOne({ where: { id } });
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Payday loan request successful',
+        data: updatedloan,
       });
     } catch (error) {
       return Return({

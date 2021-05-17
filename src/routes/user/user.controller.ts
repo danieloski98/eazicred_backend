@@ -322,7 +322,42 @@ export class UserController {
     description: 'either no token or the token expired',
   })
   @ApiInternalServerErrorResponse({ description: 'Error from the server' })
+  async uploadPaydayLoanfiles(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Body() body: PayDayLoan,
+  ) {
+    const user = req['user'];
+    console.log(user);
+    const result = await this.PaydayLoanService.createPaydayloan(user, body);
+    res.status(result.statusCode).send(result);
+  }
+
+  // upload paydayloan files
+
+  @Post('uploadpaydayloanfiles/:loan_id')
+  @ApiTags('USER')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiOkResponse({ description: 'paydayloan created' })
+  @ApiBadRequestResponse({
+    description: 'Something happended while trying to create the loan',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'either no token or the token expired',
+  })
+  @ApiInternalServerErrorResponse({ description: 'Error from the server' })
   @ApiConsumes('multipart/formdata')
+  @ApiParam({
+    name: 'loan_id',
+    type: Number,
+    description: 'The id of the payday loan ',
+  })
   @UseInterceptors(
     FileFieldsInterceptor(
       [
@@ -330,7 +365,7 @@ export class UserController {
         { name: 'government_ID', maxCount: 1 },
         { name: 'company_id', maxCount: 1 },
         { name: 'letter_of_employment', maxCount: 1 },
-        { name: 'HR_letter', maxCount: 1 },
+        { name: 'HR_letter_of_confirmation', maxCount: 1 },
         { name: 'utility_bill', maxCount: 1 },
       ],
       { dest: 'docs' },
@@ -339,13 +374,13 @@ export class UserController {
   async createPaydayLoan(
     @Req() req: Request,
     @Res() res: Response,
-    @Body() body: PayDayLoan,
+    @Param() param: any,
     @UploadedFiles() files: Files,
   ) {
     const user = req['user'];
-    const result = await this.PaydayLoanService.createPaydayloan(
-      user,
-      body,
+    console.log(user);
+    const result = await this.PaydayLoanService.uploadFiles(
+      param['loan_id'],
       files,
     );
     res.status(result.statusCode).send(result);
