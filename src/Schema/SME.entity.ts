@@ -85,6 +85,16 @@ export class SMELOAN {
 
   @ApiProperty({
     required: true,
+    description: '1 = pending, 2 = approved, 3 = rejected',
+  })
+  @Column({
+    nullable: false,
+    default: 1,
+  })
+  status: number;
+
+  @ApiProperty({
+    required: true,
     description: 'if the sme loan should be saved as draft',
   })
   @Column({

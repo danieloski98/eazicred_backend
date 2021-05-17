@@ -218,6 +218,68 @@ export class AdminController {
     res.status(result.statusCode).send(result);
   }
 
+  @Put('status/paydayload/:loan_id/:status')
+  @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiParam({ name: 'loan_id', type: String })
+  @ApiParam({
+    name: 'status',
+    type: Number,
+    description: 'The status you are change to, either 2, or 3',
+  })
+  @ApiBody({ type: Agent })
+  @ApiOkResponse({ description: 'Admin login Successfully' })
+  @ApiBadRequestResponse({ description: 'An error occured check the body' })
+  @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
+  async updatepaydaystatus(
+    @Res() res: Response,
+    @Body() body: Agent,
+    @Param() param: any,
+  ) {
+    const result = await this.loanService.statuschangepaydayloansLoan(
+      param['loan_id'],
+      param['status'],
+    );
+    res.status(result.statusCode).send(result);
+  }
+
+  @Put('status/sme/:loan_id/:status')
+  @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiParam({ name: 'loan_id', type: String })
+  @ApiParam({
+    name: 'status',
+    type: Number,
+    description: 'The status you are change to, either 2, or 3',
+  })
+  @ApiBody({ type: Agent })
+  @ApiOkResponse({ description: 'Admin login Successfully' })
+  @ApiBadRequestResponse({ description: 'An error occured check the body' })
+  @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
+  async updateSMEstatus(
+    @Res() res: Response,
+    @Body() body: Agent,
+    @Param() param: any,
+  ) {
+    const result = await this.loanService.statuschangeSMEloansLoan(
+      param['loan_id'],
+      param['status'],
+    );
+    res.status(result.statusCode).send(result);
+  }
+
   // DELETE ROutes
   @Delete('agent/:agent_id')
   @ApiTags('ADMIN')

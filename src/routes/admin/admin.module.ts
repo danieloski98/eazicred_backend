@@ -16,13 +16,28 @@ import { Agent } from 'src/Schema/Agent.entity';
 import { PayDayLoan } from 'src/Schema/PaydayLaon.entity';
 import { SMELOAN } from 'src/Schema/SME.entity';
 import { LoansService } from './services/loans/loans.service';
+import { UserNotiService } from '../notifications/services/user/user.service';
+import { Notification } from 'src/Schema/Notification.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Admin, User, Agent, PayDayLoan, SMELOAN]),
+    TypeOrmModule.forFeature([
+      Admin,
+      User,
+      Agent,
+      PayDayLoan,
+      SMELOAN,
+      Notification,
+    ]),
   ],
   controllers: [AdminController],
-  providers: [CrudService, UserService, AgentService, LoansService],
+  providers: [
+    CrudService,
+    UserService,
+    AgentService,
+    LoansService,
+    UserNotiService,
+  ],
 })
 export class AdminModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
