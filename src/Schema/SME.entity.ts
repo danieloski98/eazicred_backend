@@ -81,7 +81,7 @@ export class SMELOAN {
   @Column({
     nullable: false,
   })
-  type: string;
+  type: number;
 
   @ApiProperty({
     required: true,

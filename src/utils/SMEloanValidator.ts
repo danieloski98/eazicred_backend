@@ -8,4 +8,5 @@ export const SMEvalidationObject = joi.object({
   TIN_number: joi.string().required(),
   business_up_time: joi.string().required(),
   purpose_of_loan: joi.string().required(),
+  type: joi.number().required(),
 });

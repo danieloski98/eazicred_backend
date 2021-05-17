@@ -14,11 +14,21 @@ import { PaydayloansService } from './services/paydayloans/paydayloans.service';
 import { SmeloansService } from './services/smeloans/smeloans.service';
 import { PayDayLoan } from 'src/Schema/PaydayLaon.entity';
 import { NewuserService } from './services/newuser/newuser.service';
+import { UserNotiService } from '../notifications/services/user/user.service';
+import { Notification } from 'src/Schema/Notification.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, SMELOAN, PayDayLoan])],
+  imports: [
+    TypeOrmModule.forFeature([User, SMELOAN, PayDayLoan, Notification]),
+  ],
   controllers: [UserController],
-  providers: [UserService, PaydayloansService, SmeloansService, NewuserService],
+  providers: [
+    UserService,
+    PaydayloansService,
+    SmeloansService,
+    NewuserService,
+    UserNotiService,
+  ],
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

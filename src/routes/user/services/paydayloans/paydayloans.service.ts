@@ -1,3 +1,4 @@
+import { UserNotiService } from './../../../notifications/services/user/user.service';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PayDayLoan } from 'src/Schema/PaydayLaon.entity';
@@ -27,6 +28,7 @@ export class PaydayloansService {
     @InjectRepository(User) private userRepo: Repository<User>,
     @InjectRepository(PayDayLoan)
     private paydayloanRepo: Repository<PayDayLoan>,
+    private notiService: UserNotiService,
   ) {}
 
   async createPaydayloan(
@@ -52,6 +54,25 @@ export class PaydayloansService {
       const newloan = await this.paydayloanRepo.save(loan);
       // upload files
       await this.handleFiles(newloan.id, files);
+
+      const user = await this.userRepo.findOne({
+        where: { id: newloan.user_id },
+      });
+
+      if (newloan.draft) {
+        await this.notiService.sendUserNot(
+          newloan.user_id,
+          `Your payday laon was created successfully. you will be contacted shortly`,
+        );
+        await this.notiService.sendadminNot(
+          `User with email ${user.email} just created a payday loan`,
+        );
+      } else {
+        await this.notiService.sendUserNot(
+          newloan.user_id,
+          `The payday loan has been saved as draft, you can continue edit later`,
+        );
+      }
 
       return Return({
         error: false,
@@ -148,6 +169,16 @@ export class PaydayloansService {
       }
 
       const getDetails = await this.paydayloanRepo.findOne({ where: { id } });
+      const user = await this.userRepo.findOne({
+        where: { id: getDetails.user_id },
+      });
+
+      if (updateDetails.affected > 0) {
+        await this.notiService.sendUserNot(
+          user.id,
+          `Your payday laon was updated successfully`,
+        );
+      }
 
       return Return({
         error: false,
@@ -168,7 +199,14 @@ export class PaydayloansService {
   // delete a particular loan
   async deleteLoan(id: string): Promise<IReturnObject> {
     try {
+      const user = await this.paydayloanRepo.findOne({ where: { id } });
       const deletedItem = await this.paydayloanRepo.delete({ id });
+      if (deletedItem.affected > 0) {
+        await this.notiService.sendUserNot(
+          user.user_id,
+          `You have successfully deleted payday loan with id ${id}`,
+        );
+      }
       return Return({
         error: deletedItem.affected > 0 ? false : true,
         statusCode: deletedItem.affected > 0 ? 200 : 400,

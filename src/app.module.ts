@@ -5,6 +5,8 @@ import { AuthModule } from './routes/auth/auth.module';
 import { UserModule } from './routes/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './routes/admin/admin.module';
+import { NotificationsModule } from './routes/notifications/notifications.module';
+import { EmailService } from './globalservices/email/email.service';
 
 @Module({
   imports: [
@@ -22,8 +24,9 @@ import { AdminModule } from './routes/admin/admin.module';
     AuthModule,
     UserModule,
     AdminModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, EmailService],
 })
 export class AppModule {}

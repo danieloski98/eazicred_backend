@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserNotiService } from 'src/routes/notifications/services/user/user.service';
 import { SMELOAN } from 'src/Schema/SME.entity';
 import { User } from 'src/Schema/User.entity';
 import { Return } from 'src/utils/Returnfunctions';
@@ -12,6 +13,7 @@ export class SmeloansService {
   constructor(
     @InjectRepository(User) private userRepo: Repository<User>,
     @InjectRepository(SMELOAN) private smeloanRepo: Repository<SMELOAN>,
+    private notiService: UserNotiService,
   ) {}
 
   async createSMEloan(
@@ -32,6 +34,16 @@ export class SmeloansService {
       }
       // CREATE THE LOAN
       const loan = await this.smeloanRepo.save(payload);
+      // send notification
+      const usernoti = await this.notiService.sendUserNot(
+        payload['user_id'],
+        'Your SME loan was created successfully. you will be contacted shortly',
+      );
+      // get user
+      const user = await this.userRepo.findOne({ id: payload['user_id'] });
+      const adminNoti = await this.notiService.sendadminNot(
+        `SME loan was created by user with email ${user.email}`,
+      );
       return Return({
         error: false,
         statusCode: 200,
@@ -67,7 +79,12 @@ export class SmeloansService {
         .set({ ...payload })
         .where({ id: id })
         .execute();
-
+      if (updatedItem.affected > 0) {
+        const usernoti = await this.notiService.sendUserNot(
+          item['user_id'],
+          `Your update the the SME loan with id ${item.id} was successful`,
+        );
+      }
       return Return({
         error: false,
         statusCode: 200,
@@ -96,7 +113,12 @@ export class SmeloansService {
       }
 
       const updatedItem = await this.smeloanRepo.delete({ id });
-
+      if (updatedItem.affected > 0) {
+        const usernoti = await this.notiService.sendUserNot(
+          item['user_id'],
+          `You have successfully deleted the SME loan with id ${item.id} was successful`,
+        );
+      }
       return Return({
         error: false,
         statusCode: 200,
