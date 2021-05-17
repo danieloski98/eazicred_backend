@@ -4,7 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { join } from 'path';
-import * as morgan from 'morgan'
+import * as morgan from 'morgan';
 
 async function bootstrap() {
   const port = 3000;
@@ -12,7 +12,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors();
-  app.use(morgan('combined'))
+  app.use(morgan('combined'));
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
