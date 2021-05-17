@@ -1,4 +1,4 @@
 const local = 'http://localhost:4000';
-const live = 'https://eazicred.com';
+const live = 'https://api.eazicred.com';
 
-export const FILE_URL = local;
+export const FILE_URL = live;
