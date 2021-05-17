@@ -188,7 +188,7 @@ export class SmeloansService {
   async getdraftsSmeLoan(user_id: number): Promise<IReturnObject> {
     try {
       const dratfs = await this.smeloanRepo.find({
-        where: { user_id, draft: true },
+        where: { user_id },
       });
 
       return Return({
