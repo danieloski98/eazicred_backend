@@ -152,6 +152,41 @@ export class AdminController {
     res.status(result.statusCode).send(result);
   }
 
+  @Get('users')
+  @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiOkResponse({ description: 'Admin Created Successfully' })
+  @ApiBadRequestResponse({ description: 'An error occured check the body' })
+  @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
+  async getallusers(@Res() res: Response) {
+    const result = await this.loanService.getAllUsers();
+    res.status(result.statusCode).send(result);
+  }
+
+  @Get('user/:email')
+  @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiParam({ name: 'email' })
+  @ApiOkResponse({ description: 'Admin Created Successfully' })
+  @ApiBadRequestResponse({ description: 'An error occured check the body' })
+  @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
+  async getalluserbyemail(@Res() res: Response, @Param() param: any) {
+    const result = await this.loanService.geuserbyemail(param['email']);
+    res.status(result.statusCode).send(result);
+  }
+
   // POST ROutes
   @Post()
   @ApiTags('ADMIN')

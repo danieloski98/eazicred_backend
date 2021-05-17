@@ -56,6 +56,14 @@ export class AdminModule implements NestModule {
         path: 'admin/agents',
         method: RequestMethod.GET,
       },
+      {
+        path: 'admin/users',
+        method: RequestMethod.GET,
+      },
+      {
+        path: 'admin/user/:email',
+        method: RequestMethod.GET,
+      },
     );
   }
 }

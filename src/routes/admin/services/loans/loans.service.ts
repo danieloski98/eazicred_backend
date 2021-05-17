@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserNotiService } from 'src/routes/notifications/services/user/user.service';
 import { PayDayLoan } from 'src/Schema/PaydayLaon.entity';
 import { SMELOAN } from 'src/Schema/SME.entity';
+import { User } from 'src/Schema/User.entity';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
 import { Repository } from 'typeorm';
@@ -13,6 +14,7 @@ export class LoansService {
     @InjectRepository(SMELOAN) private SMEloanRepo: Repository<SMELOAN>,
     @InjectRepository(PayDayLoan)
     private paydayloanRepo: Repository<PayDayLoan>,
+    @InjectRepository(User) private userRepo: Repository<User>,
     private notiService: UserNotiService,
   ) {}
 
@@ -231,6 +233,42 @@ export class LoansService {
         error: false,
         statusCode: 200,
         data: sme,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async getAllUsers(): Promise<IReturnObject> {
+    try {
+      const users = await this.userRepo.find();
+      return Return({
+        error: false,
+        statusCode: 200,
+        data: users,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async geuserbyemail(email: string): Promise<IReturnObject> {
+    try {
+      const user = await this.userRepo.findOne({ where: { email } });
+      return Return({
+        error: false,
+        statusCode: 200,
+        data: { user },
       });
     } catch (error) {
       return Return({
