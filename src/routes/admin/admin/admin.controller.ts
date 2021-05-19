@@ -236,7 +236,7 @@ export class AdminController {
   @ApiOkResponse({ description: 'Admin login Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
-  @ApiBody({ type: Admin })
+  @ApiBody({ type: Agent })
   async createAgent(@Res() res: Response, @Body() body: Agent) {
     const result = await this.agentService.createAgent(body);
     res.status(result.statusCode).send(result);

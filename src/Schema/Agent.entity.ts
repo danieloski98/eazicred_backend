@@ -28,11 +28,11 @@ export class Agent {
   @Column({ nullable: false })
   email: string;
 
-  // @ApiProperty({
-  //   type: String,
-  // })
-  // @Column({ nullable: false })
-  // password: string;
+  @ApiProperty({
+    type: String,
+  })
+  @Column({ nullable: false })
+  phone: string;
 
   @ApiProperty({
     type: String,

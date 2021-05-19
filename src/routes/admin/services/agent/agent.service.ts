@@ -10,7 +10,7 @@ export const adminValidator = joi.object({
   email: joi.string().required().email(),
   firstname: joi.string().required(),
   lastname: joi.string().required(),
-  // password: joi.string().required().min(8),
+  phone: joi.string().required(),
 });
 
 @Injectable()

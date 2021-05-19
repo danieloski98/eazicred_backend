@@ -16,11 +16,12 @@ export class AdmincheckMiddleware implements NestMiddleware {
     // check header
     const authorization = req.headers['authorization'];
 
+
     if (authorization === undefined || authorization === null) {
       const payload = Return({
         error: true,
         statusCode: 401,
-        errorMessage: 'UNAUTHORIZED REQUEST',
+        errorMessage: 'UNAUTHORIZED REQUEST, no token found',
       });
       res.status(payload.statusCode).send(payload);
       return;
@@ -33,6 +34,7 @@ export class AdmincheckMiddleware implements NestMiddleware {
       const verifiedtoken: Partial<Admin> = verify(token, 'EAZICRED', {
         algorithms: ['HS256'],
       }) as any;
+      this.logger.log(verifiedtoken);
       // check the user id
       if (verifiedtoken.id === undefined) {
         const payload = Return({

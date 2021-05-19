@@ -99,6 +99,9 @@ export class CrudService {
         });
       }
 
+      admin['id'] = emailCheck[0].id;
+      console.log(admin);
+
       // generate token
       const token = await this.userService.generateJWT(admin);
 
