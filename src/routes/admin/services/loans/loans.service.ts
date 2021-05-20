@@ -146,6 +146,7 @@ export class LoansService {
         .set({ status })
         .where({ id })
         .execute();
+
       if (update.affected > 0) {
         switch (status) {
           case 2: {
@@ -164,10 +165,18 @@ export class LoansService {
           }
         }
       }
+
+      const newloan = await this.paydayloanRepo.findOne({
+        where: { id },
+        relations: ['user'],
+      });
+
       return Return({
         error: false,
         statusCode: 200,
-        data: sme,
+        successMessage:
+          status === 2 ? 'Loan approved' : 'loan rejected, contact support',
+        data: newloan,
       });
     } catch (error) {
       return Return({
@@ -229,10 +238,18 @@ export class LoansService {
           }
         }
       }
+
+      const newloan = await this.SMEloanRepo.findOne({
+        where: { id },
+        relations: ['user'],
+      });
+
       return Return({
         error: false,
         statusCode: 200,
-        data: sme,
+        successMessage:
+          status === 2 ? 'Loan approved' : 'loan rejected, contact support',
+        data: newloan,
       });
     } catch (error) {
       return Return({
