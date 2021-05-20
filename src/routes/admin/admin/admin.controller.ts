@@ -266,7 +266,7 @@ export class AdminController {
     res.status(result.statusCode).send(result);
   }
 
-  @Put('status/paydayload/:loan_id/:status')
+  @Put('status/paydayloan/:loan_id/:status')
   @ApiTags('ADMIN')
   @ApiHeaders([
     {
@@ -292,7 +292,7 @@ export class AdminController {
   ) {
     const result = await this.loanService.statuschangepaydayloansLoan(
       param['loan_id'],
-      param['status'],
+      parseInt(param['status']),
     );
     res.status(result.statusCode).send(result);
   }
@@ -323,7 +323,7 @@ export class AdminController {
   ) {
     const result = await this.loanService.statuschangeSMEloansLoan(
       param['loan_id'],
-      param['status'],
+      parseInt(param['status']),
     );
     res.status(result.statusCode).send(result);
   }

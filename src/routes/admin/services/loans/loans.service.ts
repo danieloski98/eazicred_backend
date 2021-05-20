@@ -131,7 +131,7 @@ export class LoansService {
       }
 
       // check the status,
-      if (status < 1 || status > 3) {
+      if (status < 2 || status > 3) {
         return Return({
           error: true,
           statusCode: 400,
@@ -206,7 +206,7 @@ export class LoansService {
       }
 
       // check the status,
-      if (status < 1 || status > 3) {
+      if (status < 2 || status > 3) {
         return Return({
           error: true,
           statusCode: 400,
@@ -239,6 +239,8 @@ export class LoansService {
         }
       }
 
+      console.log(typeof status);
+
       const newloan = await this.SMEloanRepo.findOne({
         where: { id },
         relations: ['user'],
@@ -249,7 +251,7 @@ export class LoansService {
         statusCode: 200,
         successMessage:
           status === 2 ? 'Loan approved' : 'loan rejected, contact support',
-        data: newloan,
+        data: { id: status, newloan },
       });
     } catch (error) {
       return Return({
