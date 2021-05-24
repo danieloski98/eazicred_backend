@@ -122,7 +122,7 @@ export class PayDayLoan {
   })
   @Column({
     type: 'text',
-    nullable: false,
+    nullable: true,
   })
   state: string;
 
@@ -131,7 +131,7 @@ export class PayDayLoan {
   })
   @Column({
     type: 'int',
-    nullable: false,
+    nullable: true,
   })
   length_of_time_at_current_address: number;
 
@@ -281,7 +281,7 @@ export class PayDayLoan {
   })
   @Column({
     type: 'int',
-    nullable: false,
+    nullable: true,
   })
   jobs_in_last_5_years: number;
 

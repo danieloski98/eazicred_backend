@@ -12,7 +12,7 @@ export const PaydayloanValidator = joi.object({
   home_address: joi.string().required(),
   landmark: joi.string().required(),
   LGA_of_residence: joi.string().required(),
-  state: joi.string().required(),
+  state: joi.string(),
   marital_status: joi.number().required(),
   employment_status: joi.number().required(),
   current_employer: joi.string(),
