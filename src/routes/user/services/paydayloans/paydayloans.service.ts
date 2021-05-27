@@ -357,7 +357,7 @@ export class PaydayloansService {
                 .execute();
               break;
             }
-            case 'HR_letter_of_employement': {
+            case 'HR_letter_of_employment': {
               const up = await this.paydayloanRepo
                 .createQueryBuilder('loan')
                 .update()
