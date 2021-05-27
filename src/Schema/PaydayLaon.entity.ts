@@ -468,7 +468,7 @@ export class PayDayLoan {
   @Column({
     nullable: true,
   })
-  HR_letter_of_comfirmation: string;
+  HR_letter_of_confirmation: string;
 
   @ApiProperty({
     required: true,

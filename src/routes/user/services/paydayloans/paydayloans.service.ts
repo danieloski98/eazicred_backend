@@ -357,11 +357,11 @@ export class PaydayloansService {
                 .execute();
               break;
             }
-            case 'HR_letter_of_employment': {
+            case 'HR_letter_of_confirmation': {
               const up = await this.paydayloanRepo
                 .createQueryBuilder('loan')
                 .update()
-                .set({ HR_letter_of_comfirmation: path })
+                .set({ HR_letter_of_confirmation: path })
                 .where({ id: loan.id })
                 .execute();
               break;
@@ -431,11 +431,11 @@ export class PaydayloansService {
                 .execute();
               break;
             }
-            case 'HR_letter_of_employement': {
+            case 'HR_letter_of_confirmation': {
               const up = await this.paydayloanRepo
                 .createQueryBuilder('loan')
                 .update()
-                .set({ HR_letter_of_comfirmation: path })
+                .set({ HR_letter_of_confirmation: path })
                 .where({ id: loan.id })
                 .execute();
               break;
