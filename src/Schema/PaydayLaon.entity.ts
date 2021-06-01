@@ -283,7 +283,7 @@ export class PayDayLoan {
     type: 'int',
     nullable: true,
   })
-  jobs_in_last_5_years: number;
+  jobs_in_past_5_years: number;
 
   @ApiProperty({
     required: true,

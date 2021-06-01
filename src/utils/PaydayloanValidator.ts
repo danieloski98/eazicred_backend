@@ -1,6 +1,9 @@
 import * as joi from 'joi';
 
 export const PaydayloanValidator = joi.object({
+  firstname: joi.string(),
+  lastname: joi.string(),
+  phone: joi.string(),
   user_id: joi.string().required(),
   BVN: joi.string().required(),
   DOB: joi.string().required(),
@@ -27,8 +30,8 @@ export const PaydayloanValidator = joi.object({
   date_employed: joi.date(),
   previous_employer: joi.string(),
   previous_employer_address: joi.string(),
-  length_of_time_with_previous_employer: joi.number(),
-  jobs_in_last_5_years: joi.number(),
+  //length_of_time_with_previous_employer: joi.number(),
+  jobs_in_past_5_years: joi.number(),
   current_paydate: joi.date(),
   existing_loan: joi.bool(),
   existing_loan_type: joi.number(),
@@ -38,7 +41,7 @@ export const PaydayloanValidator = joi.object({
   next_of_kin_phone: joi.string().required(),
   next_of_kin_address: joi.string().required(),
   loan_amount: joi.number().required(),
-  loan_tenure: joi.string().required(),
+  loan_tenure: joi.number().required(),
   account_number: joi.string().required(),
   account_name: joi.string().required(),
   bank_name: joi.string().required(),
@@ -51,5 +54,6 @@ export const PaydayloanValidator = joi.object({
   HR_letter_of_confirmation: joi.any(),
   utility_bill: joi.any(),
   type: joi.number().required(),
-  length_of_time_at_current_address: joi.number().required(),
+  status: joi.number(),
+  //length_of_time_at_current_address: joi.number().required(),
 });

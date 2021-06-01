@@ -86,6 +86,7 @@ export class UserService {
       // check if an account with the email exisits
       const accountExisit = await this.userRepo.findOne({
         where: { email: payload.email },
+        relations: ['SMEloans', 'paydayloans'],
       });
       if (accountExisit === undefined) {
         return Return({

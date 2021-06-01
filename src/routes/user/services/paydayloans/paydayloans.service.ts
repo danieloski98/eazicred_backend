@@ -33,7 +33,13 @@ export class PaydayloansService {
 
   async createPaydayloan(id: string, loan: PayDayLoan): Promise<IReturnObject> {
     try {
+
+      delete loan['firstname'];
+      delete loan['lastname'];
+      delete loan['phone'];
+
       this.logger.error(loan);
+
       const validation = PaydayloanValidator.validate(loan);
       if (validation.error) {
         return Return({
@@ -77,6 +83,7 @@ export class PaydayloansService {
         data: newloan,
       });
     } catch (error) {
+      this.logger.error(error);
       return Return({
         error: true,
         statusCode: 500,
