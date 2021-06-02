@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Res, Post } from '@nestjs/common';
+import { Controller, Get, Param, Res, Post, Delete } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiInternalServerErrorResponse,
@@ -51,14 +51,14 @@ export class NotificationsController {
   }
 
   // DELETE
-  @Post(':id')
+  @Delete(':id')
   @ApiTags('Notifications')
   @ApiOkResponse({ description: 'Notifications returned ' })
   @ApiBadRequestResponse({ description: 'There was an error' })
   @ApiParam({ type: String, description: 'id', name: 'id' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
   async del(@Res() res: Response, @Param() param: any) {
-    const result = await this.notiService.markasRead(param['id']);
+    const result = await this.notiService.del(param['id']);
     res.status(result.statusCode).send(result);
   }
 }
