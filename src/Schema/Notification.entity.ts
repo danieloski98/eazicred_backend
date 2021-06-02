@@ -15,8 +15,13 @@ export class Notification {
   message: string;
 
   @Column({
+    default: false,
+  })
+  read: boolean;
+
+  @Column({
     nullable: false,
     default: new Date().toISOString(),
   })
-  create_at: string;
+  created_at: string;
 }

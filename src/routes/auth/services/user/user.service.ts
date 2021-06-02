@@ -212,7 +212,7 @@ export class UserService {
     this.logger.warn(payload);
     const JWT = sign(payload, 'EAZICRED', {
       algorithm: 'HS256',
-      expiresIn: '2h',
+      expiresIn: '5h',
     });
     return JWT;
   }

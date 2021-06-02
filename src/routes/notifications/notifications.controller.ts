@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Res } from '@nestjs/common';
+import { Controller, Get, Param, Res, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiInternalServerErrorResponse,
@@ -35,6 +35,30 @@ export class NotificationsController {
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
   async notiuser(@Res() res: Response, @Param() param: any) {
     const result = await this.notiService.getUserNot(param['user_id']);
+    res.status(result.statusCode).send(result);
+  }
+
+  // POST ROUTE
+  @Post('read/:id')
+  @ApiTags('Notifications')
+  @ApiOkResponse({ description: 'Notifications returned ' })
+  @ApiBadRequestResponse({ description: 'There was an error' })
+  @ApiParam({ type: String, description: 'id', name: 'id' })
+  @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
+  async read(@Res() res: Response, @Param() param: any) {
+    const result = await this.notiService.markasRead(param['id']);
+    res.status(result.statusCode).send(result);
+  }
+
+  // DELETE
+  @Post(':id')
+  @ApiTags('Notifications')
+  @ApiOkResponse({ description: 'Notifications returned ' })
+  @ApiBadRequestResponse({ description: 'There was an error' })
+  @ApiParam({ type: String, description: 'id', name: 'id' })
+  @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
+  async del(@Res() res: Response, @Param() param: any) {
+    const result = await this.notiService.markasRead(param['id']);
     res.status(result.statusCode).send(result);
   }
 }

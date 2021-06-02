@@ -107,4 +107,69 @@ export class UserNotiService {
       });
     }
   }
+
+  async markasRead(id: string): Promise<IReturnObject> {
+    try {
+      const noti = await this.notiRepo.findOne({ where: { id } });
+      if (noti === undefined) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Not found',
+        });
+      }
+
+      // mark as read
+      const read = await this.notiRepo
+        .createQueryBuilder()
+        .update()
+        .set({ read: true })
+        .where({ id })
+        .execute();
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'read',
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server error',
+        trace: error,
+      });
+    }
+  }
+
+  async del(id: string): Promise<IReturnObject> {
+    try {
+      const noti = await this.notiRepo.findOne({ where: { id } });
+      if (noti === undefined) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Not found',
+        });
+      }
+
+      // mark as read
+      const read = await this.notiRepo
+        .createQueryBuilder()
+        .delete()
+        .where({ id })
+        .execute();
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'deleted',
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server error',
+        trace: error,
+      });
+    }
+  }
 }

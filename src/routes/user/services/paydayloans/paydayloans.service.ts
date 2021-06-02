@@ -33,7 +33,6 @@ export class PaydayloansService {
 
   async createPaydayloan(id: string, loan: PayDayLoan): Promise<IReturnObject> {
     try {
-
       delete loan['firstname'];
       delete loan['lastname'];
       delete loan['phone'];
