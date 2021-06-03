@@ -58,7 +58,7 @@ export class PaydayloansService {
         where: { id: newloan.user_id },
       });
 
-      if (newloan.draft) {
+      if (!newloan.draft) {
         await this.notiService.sendUserNot(
           newloan.user_id,
           `Your payday laon was created successfully. you will be contacted shortly`,
@@ -70,6 +70,9 @@ export class PaydayloansService {
         await this.notiService.sendUserNot(
           newloan.user_id,
           `The payday loan has been saved as draft, you can continue edit later`,
+        );
+        await this.notiService.sendadminNot(
+          `User with email ${user.email} just created a payday loan`,
         );
       }
 
