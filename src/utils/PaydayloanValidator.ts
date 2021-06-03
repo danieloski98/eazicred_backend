@@ -11,7 +11,7 @@ export const PaydayloanValidator = joi.object({
   ID_number: joi.string(),
   date_issued: joi.date().required(),
   expiry_date: joi.string().required(),
-  alt_number: joi.string(),
+  alt_number: joi.any(),
   home_address: joi.string().required(),
   landmark: joi.string().required(),
   LGA_of_residence: joi.string().required(),
