@@ -31,7 +31,7 @@ export const PaydayloanValidator = joi.object({
   previous_employer: joi.any(),
   previous_employer_address: joi.any(),
   //length_of_time_with_previous_employer: joi.number(),
-  jobs_in_past_5_years: joi.number(),
+  jobs_in_past_5_years: joi.any(),
   current_paydate: joi.date(),
   existing_loan: joi.bool(),
   existing_loan_type: joi.any(),
