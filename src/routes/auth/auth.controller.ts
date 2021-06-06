@@ -29,6 +29,26 @@ class ChangePassword {
 export class AuthController {
   constructor(private userService: UserService) {}
 
+  // GET
+  @ApiBody({ type: User })
+  @ApiTags('AUTH')
+  @Post('verify/:code')
+  @ApiBody({ type: User })
+  @ApiOkResponse({ description: 'Account created' })
+  @ApiBadRequestResponse({
+    description: 'There was an error, check the return body',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Interal server error, contact the dev!',
+  })
+  async verify(@Res() res: Response, @Param() param: any) {
+    const result = await this.userService.verifyUser(param['code']);
+    if (result.statusCode === 200) {
+      res.redirect('https://app.eazicred.com/login');
+    }
+    res.status(result.statusCode).send(result);
+  }
+
   // POST ROUTES
 
   @ApiBody({ type: User })

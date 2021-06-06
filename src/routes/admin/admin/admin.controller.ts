@@ -245,22 +245,16 @@ export class AdminController {
     res.status(result.statusCode).send(result);
   }
 
-  @Post('contact')
+  @Post('verify/:code')
   @ApiTags('ADMIN')
-  @ApiHeaders([
-    {
-      name: 'Authorization',
-      example: 'Bearer token',
-      description: 'This is a bearer token',
-    },
-  ])
+  @ApiParam({ name: 'code', type: String })
   @ApiOkResponse({ description: 'Admin login Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
   @ApiBody({ type: Agent })
-  async sendemail(@Res() res: Response, @Body() body: ContactForm) {
-    const result = await this.emailService.example(body);
-    res.status(result.statusCode).send(result);
+  async sendemail(@Res() res: Response, @Param() param: any) {
+    // const result = await this.emailService.example(body);
+    // res.status(result.statusCode).send(result);
   }
 
   // PUT ROUTES

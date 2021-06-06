@@ -4,22 +4,27 @@ import { IReturnObject } from 'src/utils/ReturnObject';
 import { Return } from 'src/utils/Returnfunctions';
 import { ContactForm } from 'src/Types/Contactform';
 import { join } from 'path';
+import { User } from 'src/Schema/User.entity';
 
 @Injectable()
 export class EmailService {
   constructor(private readonly mailerService: MailerService) {}
 
-  public async example(body: ContactForm): Promise<IReturnObject> {
+  public async sendConfirmationEmail(
+    body: User,
+    code: string,
+  ): Promise<IReturnObject> {
     try {
       const email = await this.mailerService.sendMail({
-        to: 'test@nestjs.com',
-        from: 'noreply@nestjs.com',
+        to: 'danielemmanuel257@gmail.com',
+        from: 'contact@eazicred.com',
         subject: 'Testing Nest Mailermodule with template ✔',
-        template: join(process.cwd(), '/src/templates/contact'), // The `.pug`, `.ejs` or `.hbs` extension is appended automatically.
+        template: join(process.cwd(), '/src/templates/index'), // The `.pug`, `.ejs` or `.hbs` extension is appended automatically.
         context: {
-          // Data to be sent to template engine.
-          code: 'cf1a3f828287',
-          username: body.name,
+          firstname: body.firstname,
+          lastname: body.lastname,
+          email: body.email,
+          code: code,
         },
       });
       return Return({

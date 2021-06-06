@@ -58,6 +58,12 @@ export class User {
   password: string;
 
   @Column({
+    nullable: false,
+    default: false,
+  })
+  verified: boolean;
+
+  @Column({
     default: new Date().toISOString(),
     nullable: false,
   })

@@ -7,11 +7,15 @@ import { Repository } from 'typeorm';
 import { sign } from 'jsonwebtoken';
 import { compare, compareSync, genSaltSync, hash } from 'bcrypt';
 import { Admin } from 'src/Schema/Admin.entity';
+import { EmailService } from 'src/routes/admin/services/email/email.service';
 
 @Injectable()
 export class UserService {
   private logger = new Logger();
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private userRepo: Repository<User>,
+    private emailService: EmailService,
+  ) {}
 
   async createAccount(userDetails: User): Promise<IReturnObject> {
     try {
@@ -64,6 +68,19 @@ export class UserService {
       // create the record
       const savedUser = await this.userRepo.save(newUser);
       delete savedUser.password;
+
+      // send email
+      const sentEmail = await this.emailService.sendConfirmationEmail(
+        savedUser,
+        savedUser.id,
+      );
+
+      if (sentEmail.error) {
+        const sentEmail = await this.emailService.sendConfirmationEmail(
+          savedUser,
+          savedUser.id,
+        );
+      }
 
       return Return({
         error: false,
@@ -195,6 +212,39 @@ export class UserService {
             successMessage: 'Password updated',
           });
         }
+      }
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
+  // verify user
+  async verifyUser(id: string): Promise<IReturnObject> {
+    try {
+      const user = await this.userRepo.findOne({ where: { id } });
+      if (user !== undefined) {
+        // update user
+        const updatedUser = await this.userRepo.update(
+          { id },
+          { verified: true },
+        );
+
+        return Return({
+          error: false,
+          statusCode: 200,
+          successMessage: 'Account Verified',
+        });
+      } else {
+        return Return({
+          error: true,
+          statusCode: 400,
+          successMessage: 'Account not verified',
+        });
       }
     } catch (error) {
       return Return({
