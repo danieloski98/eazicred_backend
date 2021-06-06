@@ -247,12 +247,12 @@ export class AdminController {
 
   @Post('support')
   @ApiTags('ADMIN')
-  @ApiParam({ name: 'code', type: String })
   @ApiOkResponse({ description: 'Admin login Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
   @ApiBody({ type: ContactForm })
   async sendemail(@Res() res: Response, @Body() body: ContactForm) {
+    console.log(body);
     const result = await this.emailService.sendSupportEmail(body);
     res.status(result.statusCode).send(result);
   }
