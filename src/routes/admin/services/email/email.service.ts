@@ -18,7 +18,7 @@ export class EmailService {
       const email = await this.mailerService.sendMail({
         to: 'danielemmanuel257@gmail.com',
         from: 'contact@eazicred.com',
-        subject: 'Testing Nest Mailermodule with template ✔',
+        subject: 'Account Creation',
         template: join(process.cwd(), '/src/templates/index'), // The `.pug`, `.ejs` or `.hbs` extension is appended automatically.
         context: {
           firstname: body.firstname,
@@ -26,6 +26,36 @@ export class EmailService {
           email: body.email,
           code: code,
         },
+      });
+      return Return({
+        error: false,
+        data: email,
+        successMessage: 'Email sent',
+        statusCode: 200,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error',
+      });
+    }
+  }
+
+  public async sendSupportEmail(support: ContactForm): Promise<IReturnObject> {
+    try {
+      const email = await this.mailerService.sendMail({
+        to: 'danielemmanuel257@gmail.com',
+        from: 'contact@eazicred.com',
+        subject: `Support message from ${support.email}`,
+        html: `
+        <div>
+          <p>Support Message from ${support.name} </p>
+
+          <p>${support.message}</p>
+        </div>
+        `, // The `.pug`, `.ejs` or `.hbs` extension is appended automatically.
       });
       return Return({
         error: false,

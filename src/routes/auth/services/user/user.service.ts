@@ -77,12 +77,12 @@ export class UserService {
 
       this.logger.log(sentEmail);
 
-      if (sentEmail.error) {
-        const sentEmail = await this.emailService.sendConfirmationEmail(
-          savedUser,
-          savedUser.id,
-        );
-      }
+      // if (sentEmail.error) {
+      //   const sentEmail = await this.emailService.sendConfirmationEmail(
+      //     savedUser,
+      //     savedUser.id,
+      //   );
+      // }
 
       return Return({
         error: false,

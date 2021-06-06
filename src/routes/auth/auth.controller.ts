@@ -45,8 +45,9 @@ export class AuthController {
     const result = await this.userService.verifyUser(param['code']);
     if (result.statusCode === 200) {
       res.redirect('https://app.eazicred.com/login');
+    } else {
+      res.status(result.statusCode).send(result);
     }
-    res.status(result.statusCode).send(result);
   }
 
   // POST ROUTES
