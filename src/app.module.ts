@@ -7,9 +7,27 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './routes/admin/admin.module';
 import { NotificationsModule } from './routes/notifications/notifications.module';
 import { EmailService } from './globalservices/email/email.service';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { join } from 'path';
 
 @Module({
   imports: [
+    MailerModule.forRoot({
+      transport: 'smtp://contact@eazicred.com:Shittu&Naycho@smtp.office365.com',
+      defaults: {
+        from: '"nest-modules" <modules@nestjs.com>',
+      },
+      template: {
+        dir: join(process.cwd(), '/src/templates'),
+        adapter: new HandlebarsAdapter(undefined, {
+          inlineCssEnabled: true,
+        }),
+        options: {
+          strict: true,
+        },
+      },
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',

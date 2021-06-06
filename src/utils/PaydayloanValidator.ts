@@ -55,5 +55,6 @@ export const PaydayloanValidator = joi.object({
   utility_bill: joi.any(),
   type: joi.number().required(),
   status: joi.number(),
+  created_at: joi.any(),
   //length_of_time_at_current_address: joi.number().required(),
 });

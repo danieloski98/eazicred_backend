@@ -18,6 +18,7 @@ import { SMELOAN } from 'src/Schema/SME.entity';
 import { LoansService } from './services/loans/loans.service';
 import { UserNotiService } from '../notifications/services/user/user.service';
 import { Notification } from 'src/Schema/Notification.entity';
+import { EmailService } from './services/email/email.service';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { Notification } from 'src/Schema/Notification.entity';
     AgentService,
     LoansService,
     UserNotiService,
+    EmailService,
   ],
 })
 export class AdminModule implements NestModule {

@@ -25,6 +25,8 @@ import { Admin } from 'src/Schema/Admin.entity';
 import { Agent } from 'src/Schema/Agent.entity';
 import { AgentService } from '../services/agent/agent.service';
 import { CrudService } from '../services/crud/crud.service';
+import { EmailService } from '../services/email/email.service';
+import { ContactForm } from 'src/Types/Contactform';
 
 class LoginDetails {
   @ApiProperty({
@@ -44,6 +46,7 @@ export class AdminController {
     private adminService: CrudService,
     private agentService: AgentService,
     private loanService: LoansService,
+    private emailService: EmailService,
   ) {}
 
   // GET ROUTES
@@ -239,6 +242,24 @@ export class AdminController {
   @ApiBody({ type: Agent })
   async createAgent(@Res() res: Response, @Body() body: Agent) {
     const result = await this.agentService.createAgent(body);
+    res.status(result.statusCode).send(result);
+  }
+
+  @Post('contact')
+  @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiOkResponse({ description: 'Admin login Successfully' })
+  @ApiBadRequestResponse({ description: 'An error occured check the body' })
+  @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
+  @ApiBody({ type: Agent })
+  async sendemail(@Res() res: Response, @Body() body: ContactForm) {
+    const result = await this.emailService.example(body);
     res.status(result.statusCode).send(result);
   }
 
