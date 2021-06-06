@@ -75,6 +75,8 @@ export class UserService {
         savedUser.id,
       );
 
+      this.logger.log(sentEmail);
+
       if (sentEmail.error) {
         const sentEmail = await this.emailService.sendConfirmationEmail(
           savedUser,
@@ -89,6 +91,7 @@ export class UserService {
         data: savedUser,
       });
     } catch (error) {
+      this.logger.log(error);
       return Return({
         error: true,
         statusCode: 500,

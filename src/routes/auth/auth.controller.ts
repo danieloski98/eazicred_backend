@@ -32,7 +32,7 @@ export class AuthController {
   // GET
   @ApiBody({ type: User })
   @ApiTags('AUTH')
-  @Post('verify/:code')
+  @Get('verify/:code')
   @ApiBody({ type: User })
   @ApiOkResponse({ description: 'Account created' })
   @ApiBadRequestResponse({
