@@ -46,7 +46,7 @@ export class EmailService {
   public async sendSupportEmail(support: ContactForm): Promise<IReturnObject> {
     try {
       const email = await this.mailerService.sendMail({
-        to: 'danielemmanuel257@gmail.com',
+        to: 'contact@eazicred.com',
         from: 'contact@eazicred.com',
         subject: `Support message from ${support.email}`,
         html: `
