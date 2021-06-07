@@ -70,12 +70,12 @@ export class UserService {
       delete savedUser.password;
 
       // send email
-      const sentEmail = await this.emailService.sendConfirmationEmail(
-        savedUser,
-        savedUser.id,
-      );
+      // const sentEmail = await this.emailService.sendConfirmationEmail(
+      //   savedUser,
+      //   savedUser.id,
+      // );
 
-      this.logger.log(sentEmail);
+      // this.logger.log(sentEmail);
 
       // if (sentEmail.error) {
       //   const sentEmail = await this.emailService.sendConfirmationEmail(
