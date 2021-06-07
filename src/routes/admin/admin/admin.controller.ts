@@ -254,6 +254,7 @@ export class AdminController {
   async sendemail(@Res() res: Response, @Body() body: ContactForm) {
     const result = await this.emailService.sendSupportEmail(body);
     console.log(result);
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.status(result.statusCode).send(result);
   }
 
