@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { IReturnObject } from 'src/utils/ReturnObject';
 import { Return } from 'src/utils/Returnfunctions';
@@ -8,6 +8,7 @@ import { User } from 'src/Schema/User.entity';
 
 @Injectable()
 export class EmailService {
+  logger = new Logger();
   constructor(private readonly mailerService: MailerService) {}
 
   public async sendConfirmationEmail(
@@ -64,6 +65,7 @@ export class EmailService {
         statusCode: 200,
       });
     } catch (error) {
+      this.logger.error(error);
       return Return({
         error: true,
         statusCode: 500,
