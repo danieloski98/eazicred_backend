@@ -11,7 +11,7 @@ async function bootstrap() {
   const logger = new Logger();
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.enableCors({ origin: '*' });
+  app.enableCors();
   app.use(morgan('combined'));
 
   app.useStaticAssets(join(__dirname, '..', 'public'));

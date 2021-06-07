@@ -1,3 +1,4 @@
+import { ContactFormDetails } from './../../Schema/contact.entity';
 import { AdmincheckMiddleware } from './../../middleware/admin.middleware';
 import {
   MiddlewareConsumer,
@@ -29,6 +30,7 @@ import { EmailService } from './services/email/email.service';
       PayDayLoan,
       SMELOAN,
       Notification,
+      ContactFormDetails,
     ]),
   ],
   controllers: [AdminController],

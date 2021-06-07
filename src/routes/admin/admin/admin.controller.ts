@@ -27,6 +27,7 @@ import { AgentService } from '../services/agent/agent.service';
 import { CrudService } from '../services/crud/crud.service';
 import { EmailService } from '../services/email/email.service';
 import { ContactForm } from 'src/Types/Contactform';
+import { ContactFormDetails } from 'src/Schema/contact.entity';
 
 class LoginDetails {
   @ApiProperty({
@@ -50,7 +51,7 @@ export class AdminController {
   ) {}
 
   // GET ROUTES
-  @Get('agents')
+  @Get('messages')
   @ApiTags('ADMIN')
   @ApiHeaders([
     {
@@ -63,6 +64,23 @@ export class AdminController {
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
   async getAgents(@Res() res: Response) {
+    const result = await this.adminService.getMessages();
+    res.status(result.statusCode).send(result);
+  }
+
+  @Get('messages')
+  @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiOkResponse({ description: 'Admin Created Successfully' })
+  @ApiBadRequestResponse({ description: 'An error occured check the body' })
+  @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
+  async getMessages(@Res() res: Response) {
     const result = await this.agentService.getAgents();
     res.status(result.statusCode).send(result);
   }
@@ -251,10 +269,8 @@ export class AdminController {
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
   @ApiBody({ type: ContactForm })
-  async sendemail(@Res() res: Response, @Body() body: ContactForm) {
-    const result = await this.emailService.sendSupportEmail(body);
-    console.log(result);
-    res.setHeader('Access-Control-Allow-Origin', '*');
+  async sendemail(@Res() res: Response, @Body() body: ContactFormDetails) {
+    const result = await this.adminService.contact(body);
     res.status(result.statusCode).send(result);
   }
 

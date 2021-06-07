@@ -1,3 +1,4 @@
+import { ContactFormDetails } from './../../../../Schema/contact.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Admin } from 'src/Schema/Admin.entity';
@@ -19,6 +20,8 @@ export const adminValidator = joi.object({
 export class CrudService {
   constructor(
     @InjectRepository(Admin) private adminRepo: Repository<Admin>,
+    @InjectRepository(ContactFormDetails)
+    private contactRepo: Repository<ContactFormDetails>,
     private userService: UserService,
   ) {}
 
@@ -133,6 +136,44 @@ export class CrudService {
         statusCode: 200,
         successMessage: 'Admins',
         data: notI,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async contact(contact: ContactFormDetails): Promise<IReturnObject> {
+    try {
+      const newContact = await this.contactRepo.save(contact);
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Message sent',
+        data: newContact,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async getMessages(): Promise<IReturnObject> {
+    try {
+      const newContact = await this.contactRepo.find();
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Messages',
+        data: newContact,
       });
     } catch (error) {
       return Return({
