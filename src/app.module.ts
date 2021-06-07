@@ -16,9 +16,10 @@ import { join } from 'path';
     MailerModule.forRoot({
       transport: {
         host: 'smtp.office365.com',
-        port: 25,
+        port: 587,
         tls: { rejectUnauthorized: false },
         greetingTimeout: 1000 * 15,
+        // secure: true,
         auth: {
           user: 'contact@eazicred.com',
           pass: 'Shittu&Naycho',
