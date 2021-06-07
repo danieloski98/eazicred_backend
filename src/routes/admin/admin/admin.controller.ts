@@ -252,8 +252,8 @@ export class AdminController {
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
   @ApiBody({ type: ContactForm })
   async sendemail(@Res() res: Response, @Body() body: ContactForm) {
-    console.log(body);
     const result = await this.emailService.sendSupportEmail(body);
+    console.log(result);
     res.status(result.statusCode).send(result);
   }
 

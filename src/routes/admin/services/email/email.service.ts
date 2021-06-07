@@ -50,13 +50,8 @@ export class EmailService {
         to: 'contact@eazicred.com',
         from: 'contact@eazicred.com',
         subject: `Support message from ${support.email}`,
-        html: `
-        <div>
-          <p>Support Message from ${support.name} </p>
-
-          <p>${support.message}</p>
-        </div>
-        `, // The `.pug`, `.ejs` or `.hbs` extension is appended automatically.
+        html: join(process.cwd(), '/src/templates/support'),
+        context: support, // The `.pug`, `.ejs` or `.hbs` extension is appended automatically.
       });
       return Return({
         error: false,

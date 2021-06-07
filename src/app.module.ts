@@ -14,15 +14,22 @@ import { join } from 'path';
 @Module({
   imports: [
     MailerModule.forRoot({
-      transport: 'smtp://contact@eazicred.com:Shittu&Naycho@smtp.office365.com',
+      transport: {
+        host: 'smtp.office365.com',
+        port: 25,
+        tls: { rejectUnauthorized: false },
+        greetingTimeout: 1000 * 15,
+        auth: {
+          user: 'contact@eazicred.com',
+          pass: 'Shittu&Naycho',
+        },
+      },
       defaults: {
-        from: '"nest-modules" <modules@nestjs.com>',
+        from: 'contact@eazicred.com',
       },
       template: {
         dir: join(process.cwd(), '/src/templates'),
-        adapter: new HandlebarsAdapter(undefined, {
-          inlineCssEnabled: true,
-        }),
+        adapter: new HandlebarsAdapter(),
         options: {
           strict: true,
         },
