@@ -18,11 +18,11 @@ import { join } from 'path';
         host: 'smtp.office365.com',
         port: 587,
         tls: { rejectUnauthorized: false },
-        greetingTimeout: 1000 * 15,
-        // secure: true,
+        // greetingTimeout: 1000 * 15,
+        secure: true,
         auth: {
           user: 'contact@eazicred.com',
-          pass: 'Shittu&Naycho',
+          pass: 'Olayiwola02@',
         },
       },
       defaults: {

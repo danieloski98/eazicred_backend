@@ -259,6 +259,7 @@ export class AdminController {
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
   @ApiBody({ type: Agent })
   async createAgent(@Res() res: Response, @Body() body: Agent) {
+    console.log(body);
     const result = await this.agentService.createAgent(body);
     res.status(result.statusCode).send(result);
   }
@@ -270,7 +271,7 @@ export class AdminController {
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
   @ApiBody({ type: ContactForm })
   async sendemail(@Res() res: Response, @Body() body: ContactFormDetails) {
-    const result = await this.adminService.contact(body);
+    const result = await this.emailService.sendSupportEmail(body);
     res.status(result.statusCode).send(result);
   }
 

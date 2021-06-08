@@ -259,6 +259,83 @@ export class UserService {
     }
   }
 
+  // forgot password
+  async forgotpassword(email: string): Promise<IReturnObject> {
+    try {
+      const account = await this.userRepo.findOne({ where: { email } });
+      if (account === undefined || account === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Email not found',
+        });
+      } else {
+        // send the email
+        return Return({
+          error: false,
+          statusCode: 200,
+          successMessage: `if an account exist with email $${email} a reset link has been sent to it`,
+        });
+      }
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
+  async resetPassword(
+    id: string,
+    passwords: { password: string; confirmpassword: string },
+  ): Promise<IReturnObject> {
+    try {
+      const user = await this.userRepo.findOne({ where: { id } });
+      if (user === undefined || user === null) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Account not found',
+        });
+      }
+
+      // check password
+      if (passwords.password !== passwords.confirmpassword) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Passwords do not match',
+        });
+      }
+
+      // hash the password
+      const hash = await this.generateHashedPassword(passwords.confirmpassword);
+
+      // update the users password
+      const updatedPassword = await this.userRepo
+        .createQueryBuilder()
+        .update()
+        .set({ password: hash })
+        .where({ id })
+        .execute();
+
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Password changed',
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error.',
+      });
+    }
+  }
+
   public async generateJWT(
     payload: Partial<User> | Partial<Admin>,
   ): Promise<string> {
