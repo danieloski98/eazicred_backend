@@ -17,19 +17,19 @@ console.log(process.env.SMTP_PORT);
 
 @Module({
   imports: [
-    MailerModule.forRoot({
-      transport: `smtps://${process.env.SMTP_USER_NAME}:${process.env.SMTP_USER_PASS}@${process.env.SMTP_HOST}`,
-      defaults: {
-        from: '"eazicred" <support@eazicred.com>',
-      },
-      template: {
-        dir: join(process.cwd(), '/src/templates'),
-        adapter: new HandlebarsAdapter(),
-        options: {
-          strict: true,
-        },
-      },
-    }),
+    // MailerModule.forRoot({
+    //   transport: `smtps://${process.env.SMTP_USER_NAME}:${process.env.SMTP_USER_PASS}@${process.env.SMTP_HOST}`,
+    //   defaults: {
+    //     from: '"eazicred" <support@eazicred.com>',
+    //   },
+    //   template: {
+    //     dir: join(process.cwd(), '/src/templates'),
+    //     adapter: new HandlebarsAdapter(),
+    //     options: {
+    //       strict: true,
+    //     },
+    //   },
+    // }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',

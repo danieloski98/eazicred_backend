@@ -43,6 +43,7 @@
     "nestjs-dotenv": "^1.2.1",
     "nodejs-nodemailer-outlook": "^1.2.4",
     "nodemailer": "^6.6.1",
+    "nodemailer-mailgun-transport": "^2.1.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6",
