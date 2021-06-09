@@ -20,7 +20,7 @@ console.log(process.env.SMTP_PORT);
     MailerModule.forRoot({
       transport: `smtp://${process.env.SMTP_USER_NAME}:${process.env.SMTP_USER_PASS}@${process.env.SMTP_HOST}`,
       defaults: {
-        from: 'contact@eazicred.com',
+        from: '"eazicred" <support@eazicred.com>',
       },
       template: {
         dir: join(process.cwd(), '/src/templates'),
