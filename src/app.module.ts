@@ -18,7 +18,7 @@ console.log(process.env.SMTP_PORT);
 @Module({
   imports: [
     MailerModule.forRoot({
-      transport: `smtp://${process.env.SMTP_USER_NAME}:${process.env.SMTP_USER_PASS}@${process.env.SMTP_HOST}`,
+      transport: `smtps://${process.env.SMTP_USER_NAME}:${process.env.SMTP_USER_PASS}@${process.env.SMTP_HOST}`,
       defaults: {
         from: '"eazicred" <support@eazicred.com>',
       },
