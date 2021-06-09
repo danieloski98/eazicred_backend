@@ -69,20 +69,18 @@ export class UserService {
       const savedUser = await this.userRepo.save(newUser);
       delete savedUser.password;
 
-      // send email
-      // const sentEmail = await this.emailService.sendConfirmationEmail(
-      //   savedUser,
-      //   savedUser.id,
-      // );
+      //send email
+      const sentEmail = await this.emailService.sendConfirmationEmail(
+        savedUser,
+      );
 
-      // this.logger.log(sentEmail);
+      this.logger.log(sentEmail);
 
-      // if (sentEmail.error) {
-      //   const sentEmail = await this.emailService.sendConfirmationEmail(
-      //     savedUser,
-      //     savedUser.id,
-      //   );
-      // }
+      if (sentEmail.error) {
+        const sentEmail = await this.emailService.sendConfirmationEmail(
+          savedUser,
+        );
+      }
 
       return Return({
         error: false,
@@ -271,10 +269,11 @@ export class UserService {
         });
       } else {
         // send the email
+        this.emailService.sendResetEmail(account);
         return Return({
           error: false,
           statusCode: 200,
-          successMessage: `if an account exist with email $${email} a reset link has been sent to it`,
+          successMessage: `if an account exist with email ${email} a reset link has been sent to it`,
         });
       }
     } catch (error) {

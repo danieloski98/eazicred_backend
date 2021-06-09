@@ -84,6 +84,23 @@ export class AuthController {
     res.status(result.statusCode).send(result);
   }
 
+  @ApiBody({ type: User })
+  @ApiTags('AUTH')
+  @Post('forgotpassword/:email')
+  @ApiParam({ type: String, name: 'email' })
+  @ApiOkResponse({ description: 'Account created' })
+  @ApiBadRequestResponse({
+    description: 'There was an error, check the return body',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Interal server error, contact the dev!',
+  })
+  async forgotpassword(@Res() res: Response, @Param() param: any) {
+    console.log(param);
+    const result = await this.userService.forgotpassword(param['email']);
+    res.status(result.statusCode).send(result);
+  }
+
   // PUT Routes
 
   @ApiBody({ type: User })
@@ -98,7 +115,7 @@ export class AuthController {
   @ApiInternalServerErrorResponse({
     description: 'Interal server error, contact the dev!',
   })
-  async resetpassword(
+  async changepassword(
     @Res() res: Response,
     @Param() param: any,
     @Body() body: ChangePassword,
@@ -107,6 +124,27 @@ export class AuthController {
       param['user_id'],
       body,
     );
+    res.status(result.statusCode).send(result);
+  }
+
+  @ApiBody({ type: User })
+  @ApiTags('AUTH')
+  @Post('resetpassword/:user_id')
+  @ApiParam({ name: 'user_id', type: String })
+  @ApiBody({ type: ChangePassword })
+  @ApiOkResponse({ description: 'password updated successfully' })
+  @ApiBadRequestResponse({
+    description: 'There was an error, check the return body',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Interal server error, contact the dev!',
+  })
+  async resetpassword(
+    @Res() res: Response,
+    @Param() param: any,
+    @Body() body: { confirmpassword: string; password: string },
+  ) {
+    const result = await this.userService.resetPassword(param['user_id'], body);
     res.status(result.statusCode).send(result);
   }
 }
