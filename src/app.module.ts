@@ -21,9 +21,9 @@ console.log(process.env.SMTP_PORT);
       transport: {
         host: process.env.SMTP_HOST,
         port: parseInt(process.env.SMTP_PORT),
-        tls: { rejectUnauthorized: true },
+        // tls: { rejectUnauthorized: true },
         // greetingTimeout: 1000 * 15,
-        secure: true,
+        secure: false,
         auth: {
           user: process.env.SMTP_USER_NAME,
           pass: process.env.SMTP_USER_PASS,
