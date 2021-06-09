@@ -18,17 +18,7 @@ console.log(process.env.SMTP_PORT);
 @Module({
   imports: [
     MailerModule.forRoot({
-      transport: {
-        host: process.env.SMTP_HOST,
-        port: parseInt(process.env.SMTP_PORT),
-        // tls: { rejectUnauthorized: true },
-        // greetingTimeout: 1000 * 15,
-        secure: true,
-        auth: {
-          user: process.env.SMTP_USER_NAME,
-          pass: process.env.SMTP_USER_PASS,
-        },
-      },
+      transport: `smtp://${process.env.SMTP_USER_NAME}:${process.env.SMTP_USER_PASS}@${process.env.SMTP_HOST}`,
       defaults: {
         from: 'contact@eazicred.com',
       },
