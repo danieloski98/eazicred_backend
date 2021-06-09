@@ -5,6 +5,7 @@ import { Return } from 'src/utils/Returnfunctions';
 import { ContactForm } from 'src/Types/Contactform';
 import { join } from 'path';
 import { User } from 'src/Schema/User.entity';
+import * as nodemailer from 'nodejs-nodemailer-outlook';
 
 @Injectable()
 export class EmailService {
@@ -16,21 +17,39 @@ export class EmailService {
     code: string,
   ): Promise<IReturnObject> {
     try {
-      const email = await this.mailerService.sendMail({
-        to: 'danielemmanuel257@gmail.com',
+      nodemailer.sendEmail({
+        auth: {
+          user: process.env.SMTP_USER_NAME,
+          pass: process.env.SMTP_USER_PASS,
+        },
         from: 'contact@eazicred.com',
-        subject: 'Account Creation',
-        template: join(process.cwd(), '/src/templates/index'), // The `.pug`, `.ejs` or `.hbs` extension is appended automatically.
-        context: {
-          firstname: body.firstname,
-          lastname: body.lastname,
-          email: body.email,
-          code: code,
+        to: 'danielemmanuel257@gmail.com',
+        subject: 'Hey you, awesome!',
+        html: '<b>This is bold text</b>',
+        text: 'This is text version!',
+        replyTo: 'receiverXXX@gmail.com',
+        onError: (e: any) => {
+          console.log(e);
+        },
+        onSuccess: (i: any) => {
+          console.log(i);
         },
       });
+      // const email = await this.mailerService.sendMail({
+      //   to: 'danielemmanuel257@gmail.com',
+      //   from: 'contact@eazicred.com',
+      //   subject: 'Account Creation',
+      //   template: join(process.cwd(), '/src/templates/index'), // The `.pug`, `.ejs` or `.hbs` extension is appended automatically.
+      //   context: {
+      //     firstname: body.firstname,
+      //     lastname: body.lastname,
+      //     email: body.email,
+      //     code: code,
+      //   },
+      // });
       return Return({
         error: false,
-        data: email,
+        // data: email,
         successMessage: 'Email sent',
         statusCode: 200,
       });
@@ -47,10 +66,10 @@ export class EmailService {
   public async sendSupportEmail(support: ContactForm): Promise<IReturnObject> {
     try {
       const email = await this.mailerService.sendMail({
-        to: 'contact@eazicred.com',
-        from: 'contact@eazicred.com',
+        to: 'danielemmanuel257@gmail.com',
+        from: 'support@eazicred.com',
         subject: `Support message from ${support.email}`,
-        html: join(process.cwd(), '/src/templates/support'),
+        template: join(process.cwd(), '/src/templates/support'),
         context: support, // The `.pug`, `.ejs` or `.hbs` extension is appended automatically.
       });
       return Return({

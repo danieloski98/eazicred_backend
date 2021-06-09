@@ -4,6 +4,8 @@
 /public
 /docs
 
+.env
+
 # Logs
 logs
 *.log

@@ -10,19 +10,23 @@ import { EmailService } from './globalservices/email/email.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
+
+console.log(process.env.SMTP_PORT);
 
 @Module({
   imports: [
     MailerModule.forRoot({
       transport: {
-        host: 'smtp.office365.com',
-        port: 587,
-        tls: { rejectUnauthorized: false },
+        host: process.env.SMTP_HOST,
+        port: parseInt(process.env.SMTP_PORT),
+        // tls: { rejectUnauthorized: false },
         // greetingTimeout: 1000 * 15,
         secure: true,
         auth: {
-          user: 'contact@eazicred.com',
-          pass: 'Olayiwola02@',
+          user: process.env.SMTP_USER_NAME,
+          pass: process.env.SMTP_USER_PASS,
         },
       },
       defaults: {
