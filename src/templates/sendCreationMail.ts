@@ -309,7 +309,7 @@ export function sendCreationEmail(body: User): string {
         <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Open Sans',sans-serif;" align="left">
 
   <div align="center">
-    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;font-family:'Open Sans',sans-serif;"><tr><td style="font-family:'Open Sans',sans-serif;" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://app.eazicred.com" style="height:56px; v-text-anchor:middle; width:274px;" arcsize="62.5%" stroke="f" fillcolor="#29abe2"><w:anchorlock/><center style="color:#FFFFFF;font-family:'Open Sans',sans-serif;"><![endif]-->
+    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;font-family:'Open Sans',sans-serif;"><tr><td style="font-family:'Open Sans',sans-serif;" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://eazicred.com" style="height:56px; v-text-anchor:middle; width:274px;" arcsize="62.5%" stroke="f" fillcolor="#29abe2"><w:anchorlock/><center style="color:#FFFFFF;font-family:'Open Sans',sans-serif;"><![endif]-->
       <a href="https://api.eazicred.com/auth/verify/${id}" target="_blank" style="box-sizing: border-box;display: inline-block;font-family:'Open Sans',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #29abe2; border-radius: 35px; -webkit-border-radius: 35px; -moz-border-radius: 35px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;">
         <span class="v-padding" style="display:block;padding:20px 40px;line-height:120%;"><span style="font-size: 14px; line-height: 16.8px;"><strong><span style="line-height: 16.8px; font-size: 14px;">VERIFY ACCOUNT</span></strong></span></span>
       </a>
@@ -453,7 +453,7 @@ export function sendCreationEmail(body: User): string {
 
     <!--[if (mso)|(IE)]><td style="padding:5px 10px"><![endif]-->
 
-      <a href="https://app.eazicred.com" target="_self" style="padding:5px 10px;display:inline;color:#0068A5;font-family:'Lato',sans-serif;font-size:14px;text-decoration:none"  class="v-padding">
+      <a href="https://eazicred.com" target="_self" style="padding:5px 10px;display:inline;color:#0068A5;font-family:'Lato',sans-serif;font-size:14px;text-decoration:none"  class="v-padding">
         How it works
       </a>
 
@@ -468,7 +468,7 @@ export function sendCreationEmail(body: User): string {
 
     <!--[if (mso)|(IE)]><td style="padding:5px 10px"><![endif]-->
 
-      <a href="https://app.eazicred.com/faqs" target="_self" style="padding:5px 10px;display:inline;color:#0068A5;font-family:'Lato',sans-serif;font-size:14px;text-decoration:none"  class="v-padding">
+      <a href="https://eazicred.com/faqs" target="_self" style="padding:5px 10px;display:inline;color:#0068A5;font-family:'Lato',sans-serif;font-size:14px;text-decoration:none"  class="v-padding">
         FAQs
       </a>
 
@@ -483,7 +483,7 @@ export function sendCreationEmail(body: User): string {
 
     <!--[if (mso)|(IE)]><td style="padding:5px 10px"><![endif]-->
 
-      <a href="https://app.eazicred.com/terms" target="_self" style="padding:5px 10px;display:inline;color:#0068A5;font-family:'Lato',sans-serif;font-size:14px;text-decoration:none"  class="v-padding">
+      <a href="https://eazicred.com/terms" target="_self" style="padding:5px 10px;display:inline;color:#0068A5;font-family:'Lato',sans-serif;font-size:14px;text-decoration:none"  class="v-padding">
          T&Cs
       </a>
 
