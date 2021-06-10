@@ -62,7 +62,7 @@ export class EmailService {
     try {
       const mailOption: MailOptions = {
         from: `${support.email}`,
-        to: `support@eazicred.com`,
+        to: `contact@eazicred.com`,
         subject: `Support form message from ${support.name}`,
         html: `<p>${support.message}</p>`,
       };
