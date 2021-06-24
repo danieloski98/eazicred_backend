@@ -20,6 +20,7 @@ export class UserService {
   async createAccount(userDetails: User): Promise<IReturnObject> {
     try {
       // check if there is an account with that email
+      this.logger.log(userDetails);
       const emailInUse = await this.userRepo.find({
         where: { email: userDetails.email },
       });
@@ -64,6 +65,7 @@ export class UserService {
         firstname: userDetails.firstname,
         lastname: userDetails.lastname,
         phone: userDetails.phone,
+        referralCode: userDetails.referralCode,
       };
       // create the record
       const savedUser = await this.userRepo.save(newUser);

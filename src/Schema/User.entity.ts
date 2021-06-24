@@ -64,6 +64,12 @@ export class User {
   verified: boolean;
 
   @Column({
+    nullable: true,
+    default: null,
+  })
+  referralCode: number;
+
+  @Column({
     default: new Date().toISOString(),
     nullable: false,
   })
