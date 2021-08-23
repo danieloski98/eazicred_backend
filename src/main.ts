@@ -5,9 +5,11 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { join } from 'path';
 import * as morgan from 'morgan';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
 
 async function bootstrap() {
-  const port = 4000;
+  const port = process.env.PORT;
   const logger = new Logger();
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
