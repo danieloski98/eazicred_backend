@@ -31,9 +31,13 @@ export class EmailService {
   private transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     service: 'gmail',
+    port: 587,
+    secure: false,
+    requireTLS: true,
     auth: {
       user: process.env.EMAIL,
       pass: process.env.PASS,
+      type: 'login',
     },
   });
   //private transporter = nodemailer.createTransport(Mg(this.auth));
