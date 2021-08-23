@@ -14,6 +14,7 @@ import { sendSuccessEmail } from 'src/templates/Loanapplicationemail';
 import { ApplicationSuccessful } from 'src/templates/ApplicationSuccessful';
 import { ApplicationDeclined } from 'src/templates/ApplicationDeclined';
 import { AdminLoanSuccess } from 'src/templates/AdminLoanSuccess';
+import smtpTransport = require('nodemailer-smtp-transport');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -28,18 +29,35 @@ export class EmailService {
       domain: process.env.DOMAIN,
     },
   };
-  private transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    service: 'gmail',
-    port: 587,
-    secure: false,
-    requireTLS: true,
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASS,
-      type: 'login',
-    },
-  });
+
+  private transporter = nodemailer.createTransport(
+    smtpTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      requireTLS: true,
+      tls: {
+        rejectUnauthorized: false,
+      },
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
+        type: 'login',
+      },
+    }),
+  );
+  // private transporter = nodemailer.createTransport({
+  //   host: 'smtp.gmail.com',
+  //   service: 'gmail',
+  //   port: 587,
+  //   secure: false,
+  //   requireTLS: true,
+  //   auth: {
+  //     user: process.env.EMAIL,
+  //     pass: process.env.PASS,
+  //     type: 'login',
+  //   },
+  // });
   //private transporter = nodemailer.createTransport(Mg(this.auth));
   // constructor(private readonly mailerService: MailerService) {}
 
