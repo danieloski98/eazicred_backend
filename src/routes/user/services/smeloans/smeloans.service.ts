@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EmailService } from 'src/routes/admin/services/email/email.service';
 import { UserNotiService } from 'src/routes/notifications/services/user/user.service';
 import { SMELOAN } from 'src/Schema/SME.entity';
 import { User } from 'src/Schema/User.entity';
@@ -14,6 +15,7 @@ export class SmeloansService {
     @InjectRepository(User) private userRepo: Repository<User>,
     @InjectRepository(SMELOAN) private smeloanRepo: Repository<SMELOAN>,
     private notiService: UserNotiService,
+    private emailService: EmailService,
   ) {}
 
   async createSMEloan(
@@ -44,6 +46,21 @@ export class SmeloansService {
       const adminNoti = await this.notiService.sendadminNot(
         `SME loan was created by user with email ${user.email}`,
       );
+      // send email
+      const email = await this.emailService.sendSuccessEmail(
+        user.email,
+        'SME Loan',
+      );
+      // const emailAdmin = await this.emailService.se
+      const email2 = await this.emailService.sendAdminSuccessEmail(
+        user.email,
+        loan.id,
+        'SME Loan',
+      );
+
+      console.log(email);
+      console.log(email2);
+
       return Return({
         error: false,
         statusCode: 200,

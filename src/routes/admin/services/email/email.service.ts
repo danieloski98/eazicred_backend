@@ -8,9 +8,12 @@ import { User } from 'src/Schema/User.entity';
 import * as nodemailer from 'nodemailer';
 import * as Mg from 'nodemailer-mailgun-transport';
 import { MailOptions } from 'nodemailer/lib/ses-transport';
-import Mail from 'nodemailer/lib/mailer';
 import { sendCreationEmail } from 'src/templates/sendCreationMail';
 import { sendResetLink } from 'src/templates/sendPasswordReset';
+import { sendSuccessEmail } from 'src/templates/Loanapplicationemail';
+import { ApplicationSuccessful } from 'src/templates/ApplicationSuccessful';
+import { ApplicationDeclined } from 'src/templates/ApplicationDeclined';
+import { AdminLoanSuccess } from 'src/templates/AdminLoanSuccess';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -25,13 +28,21 @@ export class EmailService {
       domain: process.env.DOMAIN,
     },
   };
-  private transporter = nodemailer.createTransport(Mg(this.auth));
+  private transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASS,
+    },
+  });
+  //private transporter = nodemailer.createTransport(Mg(this.auth));
   // constructor(private readonly mailerService: MailerService) {}
 
   public async sendConfirmationEmail(body: User): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
-        from: 'support@eazicred.com',
+        from: 'eazicred@gmail.com',
         to: body.email,
         subject: `Account creation Successful`,
         html: sendCreationEmail(body),
@@ -114,6 +125,149 @@ export class EmailService {
         statusCode: 200,
       });
     } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error',
+      });
+    }
+  }
+
+  public async sendSuccessEmail(
+    email: string,
+    loanType: 'Payday Loan' | 'SME Loan',
+  ): Promise<IReturnObject> {
+    try {
+      const mailOption: MailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: `Loan Application`,
+        html: sendSuccessEmail(loanType),
+      };
+      this.transporter.sendMail(mailOption, (error: any, info: any) => {
+        if (error) {
+          console.log(error);
+          // this.logger.error(error);
+        } else {
+          this.logger.log(info);
+        }
+      });
+      return Return({
+        error: false,
+        successMessage: 'Email Sent!',
+        statusCode: 200,
+      });
+    } catch (error) {
+      console.log(error);
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error',
+      });
+    }
+  }
+
+  public async sendAdminSuccessEmail(
+    email: string,
+    loan_id: string,
+    loanType: 'Payday Loan' | 'SME Loan',
+  ): Promise<IReturnObject> {
+    try {
+      const mailOption: MailOptions = {
+        from: process.env.EMAIL,
+        to: process.env.EMAIL,
+        subject: `Loan Application`,
+        html: AdminLoanSuccess(email, loan_id, loanType),
+      };
+      this.transporter.sendMail(mailOption, (error: any, info: any) => {
+        if (error) {
+          console.log(error);
+          // this.logger.error(error);
+        } else {
+          this.logger.log(info);
+        }
+      });
+      return Return({
+        error: false,
+        successMessage: 'Email Sent!',
+        statusCode: 200,
+      });
+    } catch (error) {
+      console.log(error);
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error',
+      });
+    }
+  }
+
+  public async sendGrantEmail(
+    loan_id: string,
+    email: string,
+    loanType: 'Payday Loan' | 'SME Loan',
+  ): Promise<IReturnObject> {
+    try {
+      const mailOption: MailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: `Loan Application`,
+        html: ApplicationSuccessful(loan_id, loanType),
+      };
+      this.transporter.sendMail(mailOption, (error: any, info: any) => {
+        if (error) {
+          console.log(error);
+          // this.logger.error(error);
+        } else {
+          this.logger.log(info);
+        }
+      });
+      return Return({
+        error: false,
+        successMessage: 'Email Sent!',
+        statusCode: 200,
+      });
+    } catch (error) {
+      console.log(error);
+      return Return({
+        error: true,
+        statusCode: 500,
+        trace: error,
+        errorMessage: 'Internal Server error',
+      });
+    }
+  }
+
+  public async sendDeclinedEmail(
+    loan_id: string,
+    email: string,
+    loanType: 'Payday Loan' | 'SME Loan',
+  ): Promise<IReturnObject> {
+    try {
+      const mailOption: MailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: `Loan Application`,
+        html: ApplicationDeclined(loan_id, loanType),
+      };
+      this.transporter.sendMail(mailOption, (error: any, info: any) => {
+        if (error) {
+          console.log(error);
+          // this.logger.error(error);
+        } else {
+          this.logger.log(info);
+        }
+      });
+      return Return({
+        error: false,
+        successMessage: 'Email Sent!',
+        statusCode: 200,
+      });
+    } catch (error) {
+      console.log(error);
       return Return({
         error: true,
         statusCode: 500,

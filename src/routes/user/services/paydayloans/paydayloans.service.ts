@@ -11,6 +11,7 @@ import { Repository } from 'typeorm';
 import { extname, join } from 'path';
 import { copyFileSync, rmdirSync, existsSync, mkdirSync } from 'fs';
 import { FILE_URL } from 'src/utils/filesurl';
+import { EmailService } from 'src/routes/admin/services/email/email.service';
 
 export interface Files {
   government_ID: IFile[];
@@ -29,6 +30,7 @@ export class PaydayloansService {
     @InjectRepository(PayDayLoan)
     private paydayloanRepo: Repository<PayDayLoan>,
     private notiService: UserNotiService,
+    private emailService: EmailService,
   ) {}
 
   async createPaydayloan(id: string, loan: PayDayLoan): Promise<IReturnObject> {
@@ -57,6 +59,19 @@ export class PaydayloansService {
       const user = await this.userRepo.findOne({
         where: { id: newloan.user_id },
       });
+
+      // send email
+      const email = await this.emailService.sendSuccessEmail(
+        user.email,
+        'Payday Loan',
+      );
+      const email2 = await this.emailService.sendAdminSuccessEmail(
+        user.email,
+        newloan.id,
+        'Payday Loan',
+      );
+      console.log(email);
+      console.log(email2);
 
       if (!newloan.draft) {
         await this.notiService.sendUserNot(

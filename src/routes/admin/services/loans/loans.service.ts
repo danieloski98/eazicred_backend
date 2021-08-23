@@ -7,6 +7,7 @@ import { User } from 'src/Schema/User.entity';
 import { Return } from 'src/utils/Returnfunctions';
 import { IReturnObject } from 'src/utils/ReturnObject';
 import { Repository } from 'typeorm';
+import { EmailService } from '../email/email.service';
 
 @Injectable()
 export class LoansService {
@@ -16,6 +17,7 @@ export class LoansService {
     private paydayloanRepo: Repository<PayDayLoan>,
     @InjectRepository(User) private userRepo: Repository<User>,
     private notiService: UserNotiService,
+    private emailService: EmailService,
   ) {}
 
   // get SME loans
@@ -154,6 +156,13 @@ export class LoansService {
               sme.user_id,
               `Your paydayloan with id ${sme.id} has been approved`,
             );
+            // send email
+            const email = await this.emailService.sendGrantEmail(
+              sme.id,
+              sme.user.email,
+              'Payday Loan',
+            );
+            console.log(email);
             break;
           }
           case 3: {
@@ -161,6 +170,12 @@ export class LoansService {
               sme.user_id,
               `Your paydayloan with id ${sme.id} was rejected, Please contact support.`,
             );
+            const email = await this.emailService.sendDeclinedEmail(
+              sme.id,
+              sme.user.email,
+              'Payday Loan',
+            );
+            console.log(email);
             break;
           }
         }

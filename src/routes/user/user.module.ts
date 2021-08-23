@@ -16,6 +16,7 @@ import { PayDayLoan } from 'src/Schema/PaydayLaon.entity';
 import { NewuserService } from './services/newuser/newuser.service';
 import { UserNotiService } from '../notifications/services/user/user.service';
 import { Notification } from 'src/Schema/Notification.entity';
+import { EmailService } from '../admin/services/email/email.service';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { Notification } from 'src/Schema/Notification.entity';
     SmeloansService,
     NewuserService,
     UserNotiService,
+    EmailService,
   ],
 })
 export class UserModule implements NestModule {

@@ -7,7 +7,7 @@ import { join } from 'path';
 import * as morgan from 'morgan';
 
 async function bootstrap() {
-  const port = 3000;
+  const port = 4000;
   const logger = new Logger();
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
