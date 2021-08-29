@@ -84,6 +84,7 @@ export class CrudService {
       const emailCheck = await this.adminRepo.find({
         where: { email: admin.email },
       });
+      console.log(emailCheck);
       if (emailCheck.length < 1) {
         return Return({
           error: true,
@@ -114,7 +115,7 @@ export class CrudService {
         successMessage: 'Login Successful',
         data: {
           token,
-          amdin: emailCheck,
+          amdin: emailCheck[0],
         },
       });
     } catch (error) {

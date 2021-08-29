@@ -14,52 +14,33 @@ import { sendSuccessEmail } from 'src/templates/Loanapplicationemail';
 import { ApplicationSuccessful } from 'src/templates/ApplicationSuccessful';
 import { ApplicationDeclined } from 'src/templates/ApplicationDeclined';
 import { AdminLoanSuccess } from 'src/templates/AdminLoanSuccess';
-import smtpTransport = require('nodemailer-smtp-transport');
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
-
-console.log(process.env.KEY);
 
 @Injectable()
 export class EmailService {
   logger = new Logger();
   private auth = {
     auth: {
+      username: 'contact@support.eazicred.com',
+      password: 'DandollaEmma',
       api_key: process.env.KEY,
       domain: process.env.DOMAIN,
     },
   };
 
-  private transporter = nodemailer.createTransport(
-    smtpTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      requireTLS: true,
-      tls: {
-        rejectUnauthorized: false,
-      },
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASS,
-        type: 'login',
-      },
-    }),
-  );
-  // private transporter = nodemailer.createTransport({
-  //   host: 'smtp.gmail.com',
-  //   service: 'gmail',
-  //   port: 587,
-  //   secure: false,
-  //   requireTLS: true,
-  //   auth: {
-  //     user: process.env.EMAIL,
-  //     pass: process.env.PASS,
-  //     type: 'login',
-  //   },
-  // });
+
   //private transporter = nodemailer.createTransport(Mg(this.auth));
-  // constructor(private readonly mailerService: MailerService) {}
+  private transporter = nodemailer.createTransport({
+    host: 'smtp.mailgun.org',
+    port: 587,
+    secure: false,
+    auth: {
+      user: 'contact@support.eazicred.com',
+      pass: process.env.MAILGUN_PASSWORD,
+    },
+  });
 
   public async sendConfirmationEmail(body: User): Promise<IReturnObject> {
     try {
@@ -161,12 +142,18 @@ export class EmailService {
     loanType: 'Payday Loan' | 'SME Loan',
   ): Promise<IReturnObject> {
     try {
+      console.log(process.env.EMAIL);
       const mailOption: MailOptions = {
         from: process.env.EMAIL,
         to: email,
         subject: `Loan Application`,
         html: sendSuccessEmail(loanType),
       };
+      // const res = await this.mg.messages.create(
+      //   'sandbox69ad51e92cf34635b7d8e6b3fb007014.mailgun.org',
+      //   mailOption,
+      // );
+      // console.log(res);
       this.transporter.sendMail(mailOption, (error: any, info: any) => {
         if (error) {
           console.log(error);
@@ -175,9 +162,10 @@ export class EmailService {
           this.logger.log(info);
         }
       });
+
       return Return({
         error: false,
-        successMessage: 'Email Sent!',
+        successMessage: 'Email Sent! to',
         statusCode: 200,
       });
     } catch (error) {
