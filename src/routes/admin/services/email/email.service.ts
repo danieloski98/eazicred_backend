@@ -23,23 +23,21 @@ export class EmailService {
   logger = new Logger();
   private auth = {
     auth: {
-      username: 'contact@support.eazicred.com',
-      password: 'DandollaEmma',
-      api_key: process.env.KEY,
+      api_key: process.env.EAZIKEY,
       domain: process.env.DOMAIN,
     },
   };
 
-  //private transporter = nodemailer.createTransport(Mg(this.auth));
-  private transporter = nodemailer.createTransport({
-    host: 'smtp.mailgun.org',
-    port: 25,
-    secure: false,
-    auth: {
-      user: 'contact@support.eazicred.com',
-      pass: process.env.MAILGUN_PASSWORD,
-    },
-  });
+  private transporter = nodemailer.createTransport(Mg(this.auth));
+  // private transporter = nodemailer.createTransport({
+  //   host: 'smtp.mailgun.org',
+  //   port: 25,
+  //   secure: false,
+  //   auth: {
+  //     user: 'contact@support.eazicred.com',
+  //     pass: process.env.MAILGUN_PASSWORD,
+  //   },
+  // });
 
   public async sendConfirmationEmail(body: User): Promise<IReturnObject> {
     try {
@@ -143,7 +141,7 @@ export class EmailService {
     try {
       console.log(process.env.EMAIL);
       const mailOption: MailOptions = {
-        from: process.env.EMAIL,
+        from: 'eazicred@gmail.com',
         to: email,
         subject: `Loan Application`,
         html: sendSuccessEmail(loanType),
@@ -185,8 +183,8 @@ export class EmailService {
   ): Promise<IReturnObject> {
     try {
       const mailOption: MailOptions = {
-        from: process.env.EMAIL,
-        to: process.env.EMAIL,
+        from: 'eazicred@gmail.com',
+        to: 'eazicred@gmail.com',
         subject: `Loan Application`,
         html: AdminLoanSuccess(email, loan_id, loanType),
       };
