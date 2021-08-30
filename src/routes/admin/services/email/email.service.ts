@@ -33,8 +33,8 @@ export class EmailService {
   //private transporter = nodemailer.createTransport(Mg(this.auth));
   private transporter = nodemailer.createTransport({
     host: 'smtp.mailgun.org',
-    port: 465,
-    secure: true,
+    port: 25,
+    secure: false,
     auth: {
       user: 'contact@support.eazicred.com',
       pass: process.env.MAILGUN_PASSWORD,
