@@ -63,7 +63,7 @@ export class AdminController {
   @ApiOkResponse({ description: 'Admin Created Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
-  async getAgents(@Res() res: Response) {
+  async getMsg(@Res() res: Response) {
     const result = await this.adminService.getMessages();
     res.status(result.statusCode).send(result);
   }
@@ -97,7 +97,7 @@ export class AdminController {
   @ApiOkResponse({ description: 'Admin Created Successfully' })
   @ApiBadRequestResponse({ description: 'An error occured check the body' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
-  async getAdmins(@Res() res: Response) {
+  async getAgents(@Res() res: Response) {
     const result = await this.agentService.getAgents();
     res.status(result.statusCode).send(result);
   }
@@ -116,6 +116,23 @@ export class AdminController {
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
   async getSMEloans(@Res() res: Response) {
     const result = await this.loanService.getSMELoans();
+    res.status(result.statusCode).send(result);
+  }
+
+  @Get('admins')
+  @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiOkResponse({ description: 'Admin Created Successfully' })
+  @ApiBadRequestResponse({ description: 'An error occured check the body' })
+  @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
+  async getAdmins(@Res() res: Response) {
+    const result = await this.adminService.getAllAdmins();
     res.status(result.statusCode).send(result);
   }
 
@@ -275,6 +292,35 @@ export class AdminController {
   }
 
   // PUT ROUTES
+
+  @Put(':id')
+  @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiBody({ type: Admin })
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    description: 'The id of the admin',
+  })
+  @ApiBody({ type: Agent })
+  @ApiOkResponse({ description: 'Admin updated' })
+  @ApiBadRequestResponse({ description: 'An error occured check the body' })
+  @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
+  async updateadmin(
+    @Res() res: Response,
+    @Body() body: Admin,
+    @Param() param: any,
+  ) {
+    const result = await this.adminService.updateAllAdmins(param['id'], body);
+    res.status(result.statusCode).send(result);
+  }
+
   @Put('agent/:agent_id')
   @ApiTags('ADMIN')
   @ApiHeaders([
@@ -376,6 +422,24 @@ export class AdminController {
   @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
   async deleteagent(@Res() res: Response, @Param() param: any) {
     const result = await this.agentService.deleteAgent(param['agent_id']);
+    res.status(result.statusCode).send(result);
+  }
+
+  @Delete(':id')
+  @ApiTags('ADMIN')
+  @ApiHeaders([
+    {
+      name: 'Authorization',
+      example: 'Bearer token',
+      description: 'This is a bearer token',
+    },
+  ])
+  @ApiParam({ name: 'id', type: String })
+  @ApiOkResponse({ description: 'Admin login Successfully' })
+  @ApiBadRequestResponse({ description: 'An error occured check the body' })
+  @ApiInternalServerErrorResponse({ description: 'Internal Server error' })
+  async deleteadmin(@Res() res: Response, @Param() param: any) {
+    const result = await this.adminService.deleteAdmin(param['id']);
     res.status(result.statusCode).send(result);
   }
 }

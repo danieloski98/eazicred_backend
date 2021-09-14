@@ -14,6 +14,7 @@ export const adminValidator = joi.object({
   firstname: joi.string().required(),
   lastname: joi.string().required(),
   password: joi.string().required().min(8),
+  role: joi.number().required(),
 });
 
 @Injectable()
@@ -128,15 +129,77 @@ export class CrudService {
     }
   }
 
-  async getAllAdmins(id: string): Promise<IReturnObject> {
+  async getAllAdmins(id?: string): Promise<IReturnObject> {
     try {
       const admins = await this.adminRepo.find();
-      const notI = admins.filter((item) => item.id !== id);
+      //const notI = admins.filter((item) => item.id !== id);
       return Return({
         error: false,
         statusCode: 200,
         successMessage: 'Admins',
-        data: notI,
+        data: admins,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async updateAllAdmins(id: string, body: Admin): Promise<IReturnObject> {
+    try {
+      const admins = await this.adminRepo.find({ where: { id } });
+
+      if (admins.length < 1) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Admin Not found!',
+        });
+      }
+
+      // update
+      const update = await this.adminRepo.update({ id }, body);
+      //const notI = admins.filter((item) => item.id !== id);
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Admin updated!',
+        data: update,
+      });
+    } catch (error) {
+      return Return({
+        error: true,
+        statusCode: 500,
+        errorMessage: 'Internal Server Error',
+        trace: error,
+      });
+    }
+  }
+
+  async deleteAdmin(id: string): Promise<IReturnObject> {
+    try {
+      const admins = await this.adminRepo.find({ where: { id } });
+
+      if (admins.length < 1) {
+        return Return({
+          error: true,
+          statusCode: 400,
+          errorMessage: 'Admin Not found!',
+        });
+      }
+
+      // update
+      const update = await this.adminRepo.delete({ id });
+      //const notI = admins.filter((item) => item.id !== id);
+      return Return({
+        error: false,
+        statusCode: 200,
+        successMessage: 'Admin deleted',
+        data: update,
       });
     } catch (error) {
       return Return({
