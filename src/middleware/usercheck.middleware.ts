@@ -29,7 +29,7 @@ export class UsercheckMiddleware implements NestMiddleware {
 
     try {
       // verify the token
-      const verifiedtoken: Partial<User> = verify(token, 'EAZICRED', {
+      const verifiedtoken: Partial<User | any> = verify(token, 'EAZICRED', {
         algorithms: ['HS256'],
       }) as any;
       // check the user id
@@ -40,6 +40,10 @@ export class UsercheckMiddleware implements NestMiddleware {
           errorMessage: 'UNAUTHORIZED REQUEST',
         });
         res.status(payload.statusCode).send(payload);
+        return;
+      }
+      if (verifiedtoken.agent) {
+        next();
         return;
       }
       const user = await this.userRepo.findOne({

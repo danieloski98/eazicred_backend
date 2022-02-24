@@ -81,9 +81,9 @@ export class User {
   })
   paydayloans: PayDayLoan[];
 
-  @OneToMany(() => SMELOAN, (loan) => loan.user, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  SMEloans: SMELOAN[];
+  // @OneToMany(() => SMELOAN, (loan) => loan.user, {
+  //   onDelete: 'CASCADE',
+  //   onUpdate: 'CASCADE',
+  // })
+  // SMEloans: SMELOAN[];
 }

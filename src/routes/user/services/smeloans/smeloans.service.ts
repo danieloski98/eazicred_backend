@@ -19,12 +19,13 @@ export class SmeloansService {
   ) {}
 
   async createSMEloan(
-    id: string,
-    payload: Partial<SMELOAN>,
+    id?: string,
+    payload?: Partial<SMELOAN>,
   ): Promise<IReturnObject> {
     try {
-      payload['user_id'] = id;
-      console.log(payload['user_id']);
+      payload['user_id'] = payload.agent_id ? payload.agent_id : id;
+      console.log(payload);
+      // console.log(payload['user_id']);
       const validation = SMEvalidationObject.validate(payload);
       if (validation.error) {
         return Return({
@@ -36,30 +37,30 @@ export class SmeloansService {
       }
       // CREATE THE LOAN
       const loan = await this.smeloanRepo.save(payload);
-      // send notification
-      const usernoti = await this.notiService.sendUserNot(
-        payload['user_id'],
-        'Your SME loan was created successfully. you will be contacted shortly',
-      );
-      // get user
-      const user = await this.userRepo.findOne({ id: payload['user_id'] });
-      const adminNoti = await this.notiService.sendadminNot(
-        `SME loan was created by user with email ${user.email}`,
-      );
-      // send email
-      const email = await this.emailService.sendSuccessEmail(
-        user.email,
-        'SME Loan',
-      );
-      // const emailAdmin = await this.emailService.se
-      const email2 = await this.emailService.sendAdminSuccessEmail(
-        user.email,
-        loan.id,
-        'SME Loan',
-      );
 
-      console.log(email);
-      console.log(email2);
+      // if (payload['user_id']) {
+      //   // send notification
+      //   const usernoti = await this.notiService.sendUserNot(
+      //     payload['user_id'],
+      //     'Your SME loan was created successfully. you will be contacted shortly',
+      //   );
+      //   // get user
+      //   const user = await this.userRepo.findOne({ id: payload['user_id'] });
+      //   const adminNoti = await this.notiService.sendadminNot(
+      //     `SME loan was created by user with email ${user.email}`,
+      //   );
+      //   // send email
+      //   const email = await this.emailService.sendSuccessEmail(
+      //     user.email,
+      //     'SME Loan',
+      //   );
+      //   // const emailAdmin = await this.emailService.se
+      //   const email2 = await this.emailService.sendAdminSuccessEmail(
+      //     user.email,
+      //     loan.id,
+      //     'SME Loan',
+      //   );
+      // }
 
       return Return({
         error: false,
@@ -68,6 +69,7 @@ export class SmeloansService {
         data: loan,
       });
     } catch (error) {
+      console.log(error);
       return Return({
         error: true,
         statusCode: 500,

@@ -1,7 +1,10 @@
 import * as joi from 'joi';
 
 export const SMEvalidationObject = joi.object({
-  user_id: joi.string().required(),
+  user_id: joi.string().optional(),
+  email: joi.string().email().optional(),
+  phone: joi.string().optional(),
+  agent_id: joi.string().optional(),
   business_name: joi.string().required(),
   business_address: joi.string().required(),
   RC_number: joi.string().required(),

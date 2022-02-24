@@ -10,6 +10,7 @@ import { EmailService } from './globalservices/email/email.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
+import { AgentModule } from './routes/agent/agent.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -32,6 +33,7 @@ console.log(process.env.SMTP_PORT);
     UserModule,
     AdminModule,
     NotificationsModule,
+    AgentModule,
   ],
   controllers: [AppController],
   providers: [AppService, EmailService],
