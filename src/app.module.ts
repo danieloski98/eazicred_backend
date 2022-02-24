@@ -24,7 +24,7 @@ console.log(process.env.SMTP_PORT);
       username: 'daniel',
       password: 'daniel98',
       database: 'loanapp',
-      synchronize: true,
+      synchronize: false,
       autoLoadEntities: true,
       entities: ['dist/**/*.entity{.ts,.js}'],
       entityPrefix: 'la_',
