@@ -7,14 +7,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './routes/admin/admin.module';
 import { NotificationsModule } from './routes/notifications/notifications.module';
 import { EmailService } from './globalservices/email/email.service';
-import { MailerModule } from '@nestjs-modules/mailer';
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { join } from 'path';
+// import { MailerModule } from '@nestjs-modules/mailer';
+// import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+// import { join } from 'path';
 import { AgentModule } from './routes/agent/agent.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
-console.log(process.env.SMTP_PORT);
+console.log(process.env.NODE_ENV);
 
 @Module({
   imports: [
@@ -24,7 +24,7 @@ console.log(process.env.SMTP_PORT);
       username: 'daniel',
       password: 'daniel98',
       database: 'loanapp',
-      synchronize: true,
+      synchronize: process.env.NODE_ENV === 'development' ? true : false,
       autoLoadEntities: true,
       entities: ['dist/**/*.entity{.ts,.js}'],
       entityPrefix: 'la_',

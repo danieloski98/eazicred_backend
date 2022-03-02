@@ -530,6 +530,7 @@ export class PayDayLoan {
   })
   @Column({
     nullable: false,
+    type: String,
   })
   agent_id: string;
 

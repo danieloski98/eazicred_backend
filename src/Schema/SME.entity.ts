@@ -135,6 +135,7 @@ export class SMELOAN {
   })
   @Column({
     nullable: false,
+    type: String,
   })
   agent_id: string;
 
