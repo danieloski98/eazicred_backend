@@ -22,7 +22,7 @@ export class SMELOAN {
     required: true,
   })
   @Column({
-    nullable: false,
+    nullable: true,
   })
   user_id: string;
 
@@ -144,7 +144,7 @@ export class SMELOAN {
   // @JoinColumn({ referencedColumnName: 'id', name: 'user_id' })
   // user: User;
 
-  @ManyToOne(() => Agent, (agent) => agent.paydayloans, {
+  @ManyToOne(() => Agent, (agent) => agent.smeloans, {
     cascade: ['insert', 'update', 'remove'],
   })
   @JoinColumn({ referencedColumnName: 'id', name: 'agent_id' })

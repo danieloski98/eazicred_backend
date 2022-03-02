@@ -542,13 +542,13 @@ export class PayDayLoan {
   })
   draft: boolean;
 
-  @ManyToOne(() => User, (user) => user.paydayloans, {
-    cascade: ['insert', 'update', 'remove'],
-  })
-  @JoinColumn({ referencedColumnName: 'id', name: 'user_id' })
-  user: User;
+  // @ManyToOne(() => User, (user) => user.paydayloans, {
+  //   cascade: ['insert', 'update', 'remove'],
+  // })
+  // @JoinColumn({ referencedColumnName: 'id', name: 'user_id' })
+  // user: User;
 
-  @ManyToOne(() => User, (user) => user.paydayloans, {
+  @ManyToOne(() => Agent, (agent) => agent.paydayloans, {
     cascade: ['insert', 'update', 'remove'],
   })
   @JoinColumn({ referencedColumnName: 'id', name: 'agent_id' })

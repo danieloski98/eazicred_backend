@@ -75,13 +75,13 @@ export class User {
   })
   created_at: string;
 
-  @OneToMany(() => PayDayLoan, (loan) => loan.user, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  paydayloans: PayDayLoan[];
+  // @OneToMany(() => PayDayLoan, (pay) => pay.user, {
+  //   onDelete: 'CASCADE',
+  //   onUpdate: 'CASCADE',
+  // })
+  // paydayloans: PayDayLoan[];
 
-  // @OneToMany(() => SMELOAN, (loan) => loan.user, {
+  // @OneToMany(() => SMELOAN, (sme) => sme.user, {
   //   onDelete: 'CASCADE',
   //   onUpdate: 'CASCADE',
   // })

@@ -159,7 +159,7 @@ export class LoansService {
             // send email
             const email = await this.emailService.sendGrantEmail(
               sme.id,
-              sme.user.email,
+              sme.email,
               'Payday Loan',
             );
             console.log(email);
@@ -172,7 +172,7 @@ export class LoansService {
             );
             const email = await this.emailService.sendDeclinedEmail(
               sme.id,
-              sme.user.email,
+              sme.email,
               'Payday Loan',
             );
             console.log(email);
