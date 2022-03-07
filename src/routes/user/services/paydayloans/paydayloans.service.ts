@@ -56,17 +56,17 @@ export class PaydayloansService {
       // upload files
       // await this.handleFiles(newloan.id, files);
 
-      const user = await this.userRepo.findOne({
-        where: { id: newloan.user_id },
-      });
+      // const user = await this.userRepo.findOne({
+      //   where: { id: newloan.user_id },
+      // });
 
       // send email
       const email = await this.emailService.sendSuccessEmail(
-        user.email,
+        loan.email,
         'Payday Loan',
       );
       const email2 = await this.emailService.sendAdminSuccessEmail(
-        user.email,
+        loan.email,
         newloan.id,
         'Payday Loan',
       );
@@ -79,7 +79,7 @@ export class PaydayloansService {
           `Your payday loan was created successfully. you will be contacted shortly`,
         );
         await this.notiService.sendadminNot(
-          `User with email ${user.email} just created a payday loan`,
+          `User with email ${loan.email} just created a payday loan`,
         );
       } else {
         await this.notiService.sendUserNot(
@@ -87,16 +87,14 @@ export class PaydayloansService {
           `The payday loan has been saved as draft, you can continue edit later`,
         );
         await this.notiService.sendadminNot(
-          `User with email ${user.email} just created a payday loan`,
+          `User with email ${loan.email} just created a payday loan`,
         );
       }
 
       return Return({
         error: false,
         statusCode: 200,
-        successMessage: loan.draft
-          ? 'Loan saved as draft'
-          : 'Payday loan request successful',
+        successMessage: 'Payday loan request successful',
         data: newloan,
       });
     } catch (error) {

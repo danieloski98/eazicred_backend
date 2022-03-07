@@ -3,8 +3,10 @@ import * as joi from 'joi';
 export const PaydayloanValidator = joi.object({
   firstname: joi.string(),
   lastname: joi.string(),
+  email: joi.string().email().optional(),
+  agent_id: joi.string().required(),
   phone: joi.string(),
-  user_id: joi.string().required(),
+  user_id: joi.string().optional(),
   BVN: joi.string().required(),
   DOB: joi.string().required(),
   Means_of_ID: joi.string().required(),

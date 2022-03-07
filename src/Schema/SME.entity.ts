@@ -7,7 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Agent } from './Agent.entity';
-import { User } from './User.entity';
+// import { User } from './User.entity';
 
 @Entity()
 export class SMELOAN {

@@ -24,7 +24,7 @@ console.log(process.env.NODE_ENV);
       username: 'daniel',
       password: 'daniel98',
       database: 'loanapp',
-      synchronize: process.env.NODE_ENV === 'development' ? true : false,
+      synchronize: process.env.NODE_ENV === 'development' ? true : true,
       autoLoadEntities: true,
       entities: ['dist/**/*.entity{.ts,.js}'],
       entityPrefix: 'la_',

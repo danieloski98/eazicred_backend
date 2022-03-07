@@ -549,6 +549,26 @@ export class PayDayLoan {
   // @JoinColumn({ referencedColumnName: 'id', name: 'user_id' })
   // user: User;
 
+  @ApiProperty({
+    required: true,
+    description: 'this is a file',
+  })
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  firstname: string;
+
+  @ApiProperty({
+    required: true,
+    description: 'this is a file',
+  })
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  lastname: string;
+
   @ManyToOne(() => Agent, (agent) => agent.paydayloans, {
     cascade: ['insert', 'update', 'remove'],
   })
