@@ -254,7 +254,6 @@ export class LoansService {
 
       const newloan = await this.SMEloanRepo.findOne({
         where: { id },
-        relations: ['user'],
       });
 
       return Return({
