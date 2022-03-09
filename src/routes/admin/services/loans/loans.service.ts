@@ -120,7 +120,6 @@ export class LoansService {
     try {
       const sme = await this.paydayloanRepo.findOne({
         where: { id },
-        relations: ['user'],
       });
       if (sme === undefined) {
         return Return({
@@ -208,7 +207,6 @@ export class LoansService {
     try {
       const sme = await this.SMEloanRepo.findOne({
         where: { id },
-        relations: ['user'],
       });
       if (sme === undefined) {
         return Return({
