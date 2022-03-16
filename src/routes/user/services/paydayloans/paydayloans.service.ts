@@ -120,6 +120,7 @@ export class PaydayloansService {
       }
 
       await this.handleFiles(id as any, files);
+      console.log('files uploaded');
       const updatedloan = await this.paydayloanRepo.findOne({ where: { id } });
       return Return({
         error: false,

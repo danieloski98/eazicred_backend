@@ -28,7 +28,11 @@ export class AgentController {
         return;
       } else {
         // generate jwt
-        const token = await this.generateJWT({ ...exisit[0], agent: true });
+        const token = await this.generateJWT({
+          id: exisit[0].id,
+          email: exisit[0].email,
+          agent: true,
+        });
         const success = Return({
           error: false,
           successMessage: 'Agent found',

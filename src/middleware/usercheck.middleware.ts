@@ -26,6 +26,7 @@ export class UsercheckMiddleware implements NestMiddleware {
     }
     // decode string
     const token = req.headers['authorization'].split(' ')[1];
+    console.log(`Token  - ${token}`);
 
     try {
       // verify the token

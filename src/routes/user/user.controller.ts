@@ -377,8 +377,9 @@ export class UserController {
     @Param() param: any,
     @UploadedFiles() files: Files,
   ) {
-    const user = req['user'];
-    console.log(user);
+    // const user = req['user'];
+    console.log('this is before the user');
+    console.log(files);
     const result = await this.PaydayLoanService.uploadFiles(
       param['loan_id'],
       files,
