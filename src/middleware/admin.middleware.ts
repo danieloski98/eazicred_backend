@@ -15,7 +15,7 @@ export class AdmincheckMiddleware implements NestMiddleware {
     // get token
     // check header
     const authorization = req.headers['authorization'];
-
+    // console.log(req.headers);
 
     if (authorization === undefined || authorization === null) {
       const payload = Return({
@@ -31,8 +31,10 @@ export class AdmincheckMiddleware implements NestMiddleware {
 
     try {
       // verify the token
+      this.logger.log(token);
       const verifiedtoken: Partial<Admin> = verify(token, 'EAZICRED', {
         algorithms: ['HS256'],
+        complete: false,
       }) as any;
       this.logger.log(verifiedtoken);
       // check the user id
@@ -43,6 +45,7 @@ export class AdmincheckMiddleware implements NestMiddleware {
           errorMessage: 'UNAUTHORIZED REQUEST',
         });
         res.status(payload.statusCode).send(payload);
+        // next();
         return;
       }
       const user = await this.userRepo.findOne({
@@ -64,9 +67,10 @@ export class AdmincheckMiddleware implements NestMiddleware {
       const payload = Return({
         error: true,
         statusCode: 401,
-        errorMessage: 'UNAUTHORIZED REQUEST',
+        errorMessage: 'UNAUTHORIZED REQUEST CATCH',
         trace: error,
       });
+      console.log(error);
 
       res.status(payload.statusCode).send(payload);
       return;
