@@ -42,7 +42,7 @@ export class LoansService {
   // get payday loans
   async getpaydayloansLoans(): Promise<IReturnObject> {
     try {
-      const sme = await this.paydayloanRepo.find();
+      const sme = await this.paydayloanRepo.find({ relations: ['agent'] });
       return Return({
         error: false,
         statusCode: 200,
